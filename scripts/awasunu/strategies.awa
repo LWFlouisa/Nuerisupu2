@@ -1,0 +1,5 @@
+encrireln Player Strategies
+hlim 2 :plure player_lures :pstun player_stuns :ptrap player_traps
+
+encrireln Room Designs
+hlim 2 :oubliette one_way_dungeon :catecombs catecomb_based_dungeon :caverns cavern_based_dungeon

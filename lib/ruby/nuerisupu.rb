@@ -1,0 +1,9743 @@
+#############################################################################################################
+#                                               Obelisk DSL                                                 #
+#                                    Data Recycling And Memory Management                                   #
+#############################################################################################################
+# Focus on preserving knowledge through burial urns inside of obelisks. This started out as an esolang, and #
+# gradually became more useful for real world problems, such as the issue of catestrophic forgetting in     #
+# AI models.                                                                                                #
+#############################################################################################################
+module Obelisk
+  module DesoYokasovonos
+    class LanguageGenerator
+      def self.ahuzacos
+        word_classes = [[
+          [
+            [["Le",  "Le"], ["Le",  "La"], ["Le",  "Les"]],
+            [["La",  "Le"], ["La",  "La"], ["La",  "Les"]],
+            [["Les", "Le"], ["Les", "La"], ["Les", "Les"]],
+          ], [
+            [["Anu",  "Anu"], ["Anu",  "Ana"], ["Anu",  "Anos"]],
+            [["Ana",  "Anu"], ["Ana",  "Ana"], ["Ana",  "Anos"]],
+            [["Anos", "Anu"], ["Anos", "Ana"], ["Anos", "Anus"]],
+          ], [
+            [["Lanu",  "Lanu"], ["Lanu",  "Lana"], ["Lanu",  "Lanos"]],
+            [["Lana",  "Lanu"], ["Lana",  "Lana"], ["Lana",  "Lanos"]],
+            [["Lanos", "Lanu"], ["Lanos", "Lana"], ["Lanos", "Lanos"]],
+          ],
+        ], [
+          [
+            [["El",  "El"], ["El",  "Al"], ["El",  "Els"]],
+            [["Al",  "El"], ["Al",  "Al"], ["Al",  "Els"]],
+            [["Els", "El"], ["Els", "Al"], ["Els", "Els"]],
+          ], [
+            [["Nua",  "Naa"], ["Nua",  "Naa"], ["Nua",  "Nosa"]],
+            [["Naa",  "Naa"], ["Naa",  "Naa"], ["Naa",  "Nosa"]],
+            [["Nosa", "Naa"], ["Nosa", "Naa"], ["Nosa", "Nosa"]],
+          ], [
+            [["Nula",  "Nula"], ["Nula",  "Nala"], ["Nula",  "Nosal"]],
+            [["Nala",  "Nula"], ["Nala",  "Nala"], ["Nala",  "Nosal"]],
+            [["Nosal", "Nula"], ["Nosal", "Nala"], ["Nosal", "Nosal"]],
+          ],
+        ]]
+
+        context_window = [0, 1, 2]
+        row_options    = [0, 1, 2]
+        col_options    = [0, 1, 2]
+        arr_options    = [0, 1]
+
+        # Modifies word genders based on sanity state.
+        current_sanity  = File.read("_data/npc/dialogue/sanity.txt").to_i
+
+        cur_con = context_window.sample
+        cur_row =    row_options.sample
+        cur_col =    col_options.sample
+        cur_arr =    arr_options.sample
+
+        chosen_word_class = word_classes[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+
+        ## This covers the generation of classified nouns.
+        ho   = ["homme",      "ommehay"]
+        fe   = ["femme",      "emmefay"]
+        fi   = ["fille",      "illefay"]
+        ga   = ["garcon",        "arcongay"]
+        ta   = ["tante",      "antetay"]
+        oj   = ["oncle",      "cleoney"]
+        cofi = ["cousinfille",   "ousincay illefay"]
+        coga = ["cousingarcon", "ousincay arcongay"]
+        grm  = [ "grandmere",  "randgay eremay"]
+        grp  = [ "grandpere",  "randgay erepay"]
+
+        ct   = [    "chat",  "atchay"]
+        ch   = [   "chien",     "ienchay"]
+        oi   = [  "oiseau",    "seauoiay"]
+        gr   = [  "souris",     "ourisay"]
+        ou   = [    "ours",  "ursoay"]
+        wo   = [ "orgueil",   "gueiloray"]
+        pr   = ["ostritch", "ritchostray"]
+        po   = [  "jiraff",    "iraffjay"]
+        pi   = ["écureuil",  "ureuilecay"]
+
+        m    = ["maison", "aisonmay"]
+        c    = [ "cabin",  "abincay"]
+        e    = [ "ecole",   "coleay"]
+
+        oju  = [   "ojijaku",    "jijakuoay"]
+        neo  = ["ne ojijaku", "ne jijakuoay"]
+
+        nouns_sanity = [[
+          [[ho[0],   ho[0]], [ho[0],   fe[0]], [ho[0],   fi[0]], [ho[0],   ga[0]], [ho[0],   ta[0]], [ho[0],   oj[0]], [ho[0],   cofi[0]], [ho[0],   coga[0]], [ho[0],   grm[0]], [ho[0],   grp[0]]],
+          [[fe[0],   ho[0]], [fe[0],   fe[0]], [fe[0],   fi[0]], [fe[0],   ga[0]], [fe[0],   ta[0]], [fe[0],   oj[0]], [fe[0],   cofi[0]], [fe[0],   coga[0]], [fe[0],   grm[0]], [fe[0],   grp[0]]],
+          [[fi[0],   ho[0]], [fi[0],   fe[0]], [fi[0],   fi[0]], [fi[0],   ga[0]], [fi[0],   ta[0]], [fi[0],   oj[0]], [fi[0],   cofi[0]], [fi[0],   coga[0]], [fi[0],   grm[0]], [fi[0],   grp[0]]],
+          [[ga[0],   ho[0]], [ga[0],   fe[0]], [ga[0],   fi[0]], [ga[0],   ga[0]], [ga[0],   ta[0]], [ga[0],   oj[0]], [ga[0],   cofi[0]], [ga[0],   coga[0]], [ga[0],   grm[0]], [ga[0],   grp[0]]],
+          [[ta[0],   ho[0]], [ta[0],   fe[0]], [ta[0],   fi[0]], [ta[0],   ga[0]], [ta[0],   ta[0]], [ta[0],   oj[0]], [ta[0],   cofi[0]], [ta[0],   coga[0]], [ta[0],   grm[0]], [ta[0],   grp[0]]],
+          [[oj[0],   ho[0]], [oj[0],   fe[0]], [oj[0],   fi[0]], [oj[0],   ga[0]], [oj[0],   ta[0]], [oj[0],   oj[0]], [oj[0],   cofi[0]], [oj[0],   coga[0]], [oj[0],   grm[0]], [oj[0],   grp[0]]],
+          [[cofi[0], ho[0]], [cofi[0], fe[0]], [cofi[0], fi[0]], [cofi[0], ga[0]], [cofi[0], ta[0]], [cofi[0], oj[0]], [cofi[0], cofi[0]], [cofi[0], coga[0]], [cofi[0], grm[0]], [cofi[0], grp[0]]],
+          [[coga[0], ho[0]], [coga[0], fe[0]], [coga[0], fi[0]], [coga[0], ga[0]], [coga[0], ta[0]], [coga[0], oj[0]], [coga[0], cofi[0]], [coga[0], coga[0]], [coga[0], grm[0]], [coga[0], grp[0]]],
+          [[grm[0],  ho[0]], [grm[0],  fe[0]], [grm[0],  fi[0]], [grm[0],  ga[0]], [grm[0],  ta[0]], [grm[0],  oj[0]], [grm[0],  cofi[0]], [grm[0],  coga[0]], [grm[0],  grm[0]], [grm[0],  grp[0]]],
+          [[grp[0],  ho[0]], [grp[0],  fe[0]], [grp[0],  fi[0]], [grp[0],  ga[0]], [grp[0],  ta[0]], [grp[0],  oj[0]], [grp[0],  cofi[0]], [grp[0],  coga[0]], [grp[0],  grm[0]], [grp[0],  grp[0]]],
+        ], [
+          [[ct[0], ct[0]], [ct[0], ch[0]], [ct[0], oi[0]], [ct[0], gr[0]], [ct[0], wo[0]], [ct[0], ou[0]], [ct[0], pr[0]], [ct[0], po[0]]],
+          [[ch[0], ct[0]], [ch[0], ch[0]], [ch[0], oi[0]], [ch[0], gr[0]], [ch[0], wo[0]], [ch[0], ou[0]], [ch[0], pr[0]], [ch[0], po[0]]],
+          [[oi[0], ct[0]], [oi[0], ch[0]], [oi[0], oi[0]], [pi[0], gr[0]], [oi[0], wo[0]], [oi[0], ou[0]], [oi[0], pr[0]], [oi[0], po[0]]],
+          [[gr[0], ct[0]], [gr[0], ch[0]], [gr[0], oi[0]], [gr[0], gr[0]], [gr[0], wo[0]], [gr[0], ou[0]], [gr[0], pr[0]], [gr[0], po[0]]],
+        ], [
+          [[m[0], m[0]], [m[0], c[0]], [m[0], e[0]]],
+          [[c[0], m[0]], [c[0], c[0]], [c[0], e[0]]],
+          [[e[0], m[0]], [e[0], c[0]], [e[0], e[0]]],
+        ], [
+          [[oju[0], oju[0]], [oju[0], neo[0]]],
+          [[neo[0], oju[0]], [neo[0], neo[0]]],
+        ]]
+
+        nouns_insanity = [[
+          [[ho[1],   ho[1]], [ho[1],   fe[1]], [ho[1],   fi[1]], [ho[1],   ga[1]], [ho[1],   ta[1]], [ho[1],   oj[1]], [ho[1],   cofi[1]], [ho[1],   coga[1]], [ho[1],   grm[1]], [ho[1],   grp[1]]],
+          [[fe[1],   ho[1]], [fe[1],   fe[1]], [fe[1],   fi[1]], [fe[1],   ga[1]], [fe[1],   ta[1]], [fe[1],   oj[1]], [fe[1],   cofi[1]], [fe[1],   coga[1]], [fe[1],   grm[1]], [fe[1],   grp[1]]],
+          [[fi[1],   ho[1]], [fi[1],   fe[1]], [fi[1],   fi[1]], [fi[1],   ga[1]], [fi[1],   ta[1]], [fi[1],   oj[1]], [fi[1],   cofi[1]], [fi[1],   coga[1]], [fi[1],   grm[1]], [fi[1],   grp[1]]],
+          [[ga[1],   ho[1]], [ga[1],   fe[1]], [ga[1],   fi[1]], [ga[1],   ga[1]], [ga[1],   ta[1]], [ga[1],   oj[1]], [ga[1],   cofi[1]], [ga[1],   coga[1]], [ga[1],   grm[1]], [ga[1],   grp[1]]],
+          [[ta[1],   ho[1]], [ta[1],   fe[1]], [ta[1],   fi[1]], [ta[1],   ga[1]], [ta[1],   ta[1]], [ta[1],   oj[1]], [ta[1],   cofi[1]], [ta[1],   coga[1]], [ta[1],   grm[1]], [ta[1],   grp[1]]],
+          [[oj[1],   ho[1]], [oj[1],   fe[1]], [oj[1],   fi[1]], [oj[1],   ga[1]], [oj[1],   ta[1]], [oj[1],   oj[1]], [oj[1],   cofi[1]], [oj[1],   coga[1]], [oj[1],   grm[1]], [oj[1],   grp[1]]],
+          [[cofi[1], ho[1]], [cofi[1], fe[1]], [cofi[1], fi[1]], [cofi[1], ga[1]], [cofi[1], ta[1]], [cofi[1], oj[1]], [cofi[1], cofi[1]], [cofi[1], coga[1]], [cofi[1], grm[1]], [cofi[1], grp[1]]],
+          [[coga[1], ho[1]], [coga[1], fe[1]], [coga[1], fi[1]], [coga[1], ga[1]], [coga[1], ta[1]], [coga[1], oj[1]], [coga[1], cofi[1]], [coga[1], coga[1]], [coga[1], grm[1]], [coga[1], grp[1]]],
+          [[grm[1],  ho[1]], [grm[1],  fe[1]], [grm[1],  fi[1]], [grm[1],  ga[1]], [grm[1],  ta[1]], [grm[1],  oj[1]], [grm[1],  cofi[1]], [grm[1],  coga[1]], [grm[1],  grm[1]], [grm[1],  grp[1]]],
+          [[grp[1],  ho[1]], [grp[1],  fe[1]], [grp[1],  fi[1]], [grp[1],  ga[1]], [grp[1],  ta[1]], [grp[1],  oj[1]], [grp[1],  cofi[1]], [grp[1],  coga[1]], [grp[1],  grm[1]], [grp[1],  grp[1]]],
+        ], [
+          [[ct[1], ct[1]], [ct[1], ch[1]], [ct[1], oi[1]], [ct[1], gr[1]], [ct[1], wo[1]], [ct[1], ou[1]], [ct[1], pr[1]], [ct[1], po[1]]],
+          [[ch[1], ct[1]], [ch[1], ch[1]], [ch[1], oi[1]], [ch[1], gr[1]], [ch[1], wo[1]], [ch[1], ou[1]], [ch[1], pr[1]], [ch[1], po[1]]],
+          [[oi[1], ct[1]], [oi[1], ch[1]], [oi[1], oi[1]], [pi[1], gr[1]], [oi[1], wo[1]], [oi[1], ou[1]], [oi[1], pr[1]], [oi[1], po[1]]],
+          [[gr[1], ct[1]], [gr[1], ch[1]], [gr[1], oi[1]], [gr[1], gr[1]], [gr[1], wo[1]], [gr[1], ou[1]], [gr[1], pr[1]], [gr[1], po[1]]],
+        ], [
+          [[m[1], m[1]], [m[1], c[1]], [m[1], e[1]]],
+          [[c[1], m[1]], [c[1], c[1]], [c[1], e[1]]],
+          [[e[1], m[1]], [e[1], c[1]], [e[1], e[1]]],
+        ], [
+          [[oju[1], oju[1]], [oju[1], neo[1]]],
+          [[neo[1], oju[1]], [neo[1], neo[1]]],
+        ]]
+
+        nouns       = [nouns_sanity, nouns_insanity]
+        current_sanity  = File.read("_data/npc/dialogue/sanity.txt").to_i # sanity_context.sample
+
+        context_window = [0, 1, 2, 3]
+        cur_con    = context_window.sample
+
+        if    cur_con == 0
+          row_options    = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          col_options    = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          arr_options    = [0, 1]
+
+          #cur_con = context_window.sample
+          cur_row =    row_options.sample
+          cur_col =    col_options.sample
+          cur_arr =    arr_options.sample
+
+          chosen_noun = nouns[current_sanity][cur_con][cur_row][cur_col][cur_arr]  
+        elsif cur_con == 1
+          row_options    = [0, 1, 2, 3]
+          col_options    = [0, 1, 2, 3]
+          arr_options    = [0, 1]
+
+          #cur_con = context_window.sample
+          cur_row =    row_options.sample
+          cur_col =    col_options.sample
+          cur_arr =    arr_options.sample
+
+          chosen_noun = nouns[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+        elsif cur_con == 2
+          row_options    = [0, 1, 2]
+          col_options    = [0, 1, 2]
+          arr_options    = [0, 1]
+
+          #cur_con = context_window.sample
+          cur_row =    row_options.sample
+          cur_col =    col_options.sample
+          cur_arr =    arr_options.sample
+
+          chosen_noun = nouns[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+        elsif cur_con == 3
+          row_options    = [0, 1]
+          col_options    = [0, 1]
+          arr_options    = [0, 1]
+
+          #cur_con = context_window.sample
+          cur_row =    row_options.sample
+          cur_col =    col_options.sample
+          cur_arr =    arr_options.sample
+
+          chosen_noun = nouns[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+        end
+
+        ## This covers the adjectives that follows the nouns.
+        t  = ["tsin",           "sintway"]
+        p  = ["petite",        "etitepay"]
+        s1 = ["sucré",          "ucrepay"]
+        r  = ["roudy",          "oudyray"]
+        l  = ["léducation", "ducationley"]
+        s2 = ["sages",           "agesay"]
+
+        adjectives_sanity = [[
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+        ], [
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+        ], [
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+        ], [
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+        ], [
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+        ], [
+          [[s2[0], t[0]], [s2[0], p[0]], [s2[0], s1[0]], [s2[0], r[0]], [s2[0], l[0]], [s2[0], s2[0]]],
+          [[t[0],  t[0]], [t[0],  p[0]], [t[0],  s1[0]], [t[0],  r[0]], [t[0],  l[0]], [t[0],  s2[0]]],
+          [[p[0],  t[0]], [p[0],  p[0]], [p[0],  s1[0]], [p[0],  r[0]], [p[0],  l[0]], [p[0],  s2[0]]],
+          [[s1[0], t[0]], [s1[0], p[0]], [s1[0], s1[0]], [s1[0], r[0]], [s1[0], l[0]], [s1[0], s2[0]]],
+          [[r[0],  t[0]], [r[0],  p[0]], [r[0],  s1[0]], [r[0],  r[0]], [r[0],  l[0]], [r[0],  s2[0]]],
+          [[l[0],  t[0]], [l[0],  p[0]], [l[0],  s1[0]], [l[0],  r[0]], [l[0],  l[0]], [l[0],  s2[0]]],
+        ]]
+
+        adjectives_insanity = [[
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+        ], [
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+        ], [
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+        ], [
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+        ], [
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+        ], [
+          [[s2[1], t[1]], [s2[1], p[1]], [s2[1], s1[1]], [s2[1], r[1]], [s2[1], l[1]], [s2[1], s2[1]]],
+          [[t[1],  t[1]], [t[1],  p[1]], [t[1],  s1[1]], [t[1],  r[1]], [t[1],  l[1]], [t[1],  s2[1]]],
+          [[p[1],  t[1]], [p[1],  p[1]], [p[1],  s1[1]], [p[1],  r[1]], [p[1],  l[1]], [p[1],  s2[1]]],
+          [[s1[1], t[1]], [s1[1], p[1]], [s1[1], s1[1]], [s1[1], r[1]], [s1[1], l[1]], [s1[1], s2[1]]],
+          [[r[1],  t[1]], [r[1],  p[1]], [r[1],  s1[1]], [r[1],  r[1]], [r[1],  l[1]], [r[1],  s2[1]]],
+          [[l[1],  t[1]], [l[1],  p[1]], [l[1],  s1[1]], [l[1],  r[1]], [l[1],  l[1]], [l[1],  s2[1]]],
+        ]]
+
+        adjectives = [ adjectives_sanity, adjectives_insanity ]
+
+        context_window = [0, 1, 2, 3, 4, 5]
+
+        row_options    = [0, 1, 2, 3, 4, 5]
+        col_options    = [0, 1, 2, 3, 4, 5]
+        arr_options    = [0, 1]
+
+        # Modifies word genders based on sanity state.
+        current_sanity  = File.read("_data/npc/dialogue/sanity.txt").to_i # sanity_context.sample
+
+        cur_con = context_window.sample
+        cur_row =    row_options.sample
+        cur_col =    col_options.sample
+        cur_arr =    arr_options.sample
+
+        chosen_adjective = adjectives[current_sanity][cur_con][cur_row][cur_col][cur_arr].strip
+
+        subjects = [[
+          [["es",    "es"], ["es",    "es ne"]],
+          [["es ne", "es"], ["es ne", "es ne"]],
+        ], [
+          [["es",    "es"], ["es",    "es ne"]],
+          [["es ne", "es"], ["es ne", "es ne"]],
+        ]]
+  
+        context_window = [0, 1]
+
+        row_options    = [0, 1]
+        col_options    = [0, 1]
+        arr_options    = [0, 1]
+
+        cur_con = context_window.sample
+        cur_row =    row_options.sample
+        cur_col =    col_options.sample
+        cur_arr =    arr_options.sample
+
+        chosen_subject = subjects[cur_con][cur_row][cur_col][cur_arr]
+
+        ## This covers the verbs that come before the adverbs.
+        avo = ["avoir",        "voiray"]
+        cou = ["coupe",       "oupecay"]
+        ser = ["serrure",       "erruresay"]
+        dev = ["deverrouillage", "everrouillageday"]
+
+        verbs_sanity = [[
+          [[avo[0], avo[0]], [avo[0], cou[0]], [avo[0], ser[0]], [avo[0], dev[0]]],
+          [[cou[0], avo[0]], [cou[0], cou[0]], [cou[0], ser[0]], [cou[0], dev[0]]],
+          [[ser[0], avo[0]], [ser[0], cou[0]], [ser[0], ser[0]], [ser[0], dev[0]]],
+          [[dev[0], avo[0]], [dev[0], cou[0]], [dev[0], ser[0]], [dev[0], dev[0]]],
+        ], [
+          [[cou[0], avo[0]], [cou[0], cou[0]], [cou[0], ser[0]], [cou[0], dev[0]]],
+          [[ser[0], avo[0]], [ser[0], cou[0]], [ser[0], ser[0]], [ser[0], dev[0]]],
+          [[dev[0], avo[0]], [dev[0], cou[0]], [dev[0], ser[0]], [dev[0], dev[0]]],
+          [[avo[0], avo[0]], [avo[0], cou[0]], [avo[0], ser[0]], [avo[0], dev[0]]],
+        ], [
+          [[ser[0], avo[0]], [ser[0], cou[0]], [ser[0], ser[0]], [ser[0], dev[0]]],
+          [[dev[0], avo[0]], [dev[0], cou[0]], [dev[0], ser[0]], [dev[0], dev[0]]],
+          [[avo[0], avo[0]], [avo[0], cou[0]], [avo[0], ser[0]], [avo[0], dev[0]]],
+          [[cou[0], avo[0]], [cou[0], cou[0]], [cou[0], ser[0]], [cou[0], dev[0]]],
+        ], [
+          [[dev[0], avo[0]], [dev[0], cou[0]], [dev[0], ser[0]], [dev[0], dev[0]]],
+          [[avo[0], avo[0]], [avo[0], cou[0]], [avo[0], ser[0]], [avo[0], dev[0]]],
+          [[cou[0], avo[0]], [cou[0], cou[0]], [cou[0], ser[0]], [cou[0], dev[0]]],
+          [[ser[0], avo[0]], [ser[0], cou[0]], [ser[0], ser[0]], [ser[0], dev[0]]],
+        ]]
+
+        verbs_insanity = [[
+          [[avo[1], avo[1]], [avo[1], cou[1]], [avo[1], ser[1]], [avo[1], dev[1]]],
+          [[cou[1], avo[1]], [cou[1], cou[1]], [cou[1], ser[1]], [cou[1], dev[1]]],
+          [[ser[1], avo[1]], [ser[1], cou[1]], [ser[1], ser[1]], [ser[1], dev[1]]],
+          [[dev[1], avo[1]], [dev[1], cou[1]], [dev[1], ser[1]], [dev[1], dev[1]]],
+        ], [
+          [[cou[1], avo[1]], [cou[1], cou[1]], [cou[1], ser[1]], [cou[1], dev[1]]],
+          [[ser[1], avo[1]], [ser[1], cou[1]], [ser[1], ser[1]], [ser[1], dev[1]]],
+          [[dev[1], avo[1]], [dev[1], cou[1]], [dev[1], ser[1]], [dev[1], dev[1]]],
+          [[avo[1], avo[1]], [avo[1], cou[1]], [avo[1], ser[1]], [avo[1], dev[1]]],
+        ], [
+          [[ser[1], avo[1]], [ser[1], cou[1]], [ser[1], ser[1]], [ser[1], dev[1]]],
+          [[dev[1], avo[1]], [dev[1], cou[1]], [dev[1], ser[1]], [dev[1], dev[1]]],
+          [[avo[1], avo[1]], [avo[1], cou[1]], [avo[1], ser[1]], [avo[1], dev[1]]],
+          [[cou[1], avo[1]], [cou[1], cou[1]], [cou[1], ser[1]], [cou[1], dev[1]]],
+        ], [
+          [[dev[1], avo[1]], [dev[1], cou[1]], [dev[1], ser[1]], [dev[1], dev[1]]],
+          [[avo[1], avo[1]], [avo[1], cou[1]], [avo[1], ser[1]], [avo[1], dev[1]]],
+          [[cou[1], avo[1]], [cou[1], cou[1]], [cou[1], ser[1]], [cou[1], dev[1]]],
+          [[ser[1], avo[1]], [ser[1], cou[1]], [ser[1], ser[1]], [ser[1], dev[1]]],
+        ]]
+
+        verbs = [ verbs_sanity, verbs_insanity]
+
+        # Modifies word genders based on sanity state.
+        current_sanity  = File.read("_data/npc/dialogue/sanity.txt").to_i # sanity_context.sample
+
+        context_window = [0, 1, 2, 3]
+        row_options    = [0, 1, 2, 3]
+        col_options    = [0, 1, 2, 3]
+        arr_options    = [0, 1]
+
+        # Modifies word genders based on sanity state.
+        cur_san = 0
+
+        cur_con = context_window.sample
+        cur_row =    row_options.sample
+        cur_col =    col_options.sample
+        cur_arr =    arr_options.sample
+
+        chosen_verb = verbs[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+
+        r = ["rapidement.",     "apidementray."]
+        l = ["lentement.",    "tementelay."]
+        a = ["assurement.",     "surementasay."]
+        t = ["tranquillement.", "quillementtranay."]
+
+        adverbs_sanity   = [[
+          [[r[0], r[0]], [r[0], l[0]], [r[0], a[0]], [r[0], t[0]]],
+          [[l[0], r[0]], [l[0], l[0]], [l[0], a[0]], [l[0], t[0]]],
+          [[a[0], r[0]], [a[0], l[0]], [a[0], a[0]], [a[0], t[0]]],
+          [[t[0], r[0]], [t[0], l[0]], [t[0], a[0]], [t[0], t[0]]],
+        ], [
+          [[l[0], r[0]], [l[0], l[0]], [l[0], a[0]], [l[0], t[0]]],
+          [[a[0], r[0]], [a[0], l[0]], [a[0], a[0]], [a[0], t[0]]],
+          [[t[0], r[0]], [t[0], l[0]], [t[0], a[0]], [t[0], t[0]]],
+          [[r[0], r[0]], [r[0], l[0]], [r[0], a[0]], [r[0], t[0]]],
+        ], [
+          [[a[0], r[0]], [a[0], l[0]], [a[0], a[0]], [a[0], t[0]]],
+          [[t[0], r[0]], [t[0], l[0]], [t[0], a[0]], [t[0], t[0]]],
+          [[r[0], r[0]], [r[0], l[0]], [r[0], a[0]], [r[0], t[0]]],
+          [[l[0], r[0]], [l[0], l[0]], [l[0], a[0]], [l[0], t[0]]],
+        ], [
+          [[t[0], r[0]], [t[0], l[0]], [t[0], a[0]], [t[0], t[0]]],
+          [[r[0], r[0]], [r[0], l[0]], [r[0], a[0]], [r[0], t[0]]],
+          [[l[0], r[0]], [l[0], l[0]], [l[0], a[0]], [l[0], t[0]]],
+          [[a[0], r[0]], [a[0], l[0]], [a[0], a[0]], [a[0], t[0]]],
+        ]]
+
+        adverbs_insanity = [[
+          [[r[1], r[1]], [r[1], l[1]], [r[1], a[1]], [r[1], t[1]]],
+          [[l[1], r[1]], [l[1], l[1]], [l[1], a[1]], [l[1], t[1]]],
+          [[a[1], r[1]], [a[1], l[1]], [a[1], a[1]], [a[1], t[1]]],
+          [[t[1], r[1]], [t[1], l[1]], [t[1], a[1]], [t[1], t[1]]],
+        ], [
+          [[l[1], r[1]], [l[1], l[1]], [l[1], a[1]], [l[1], t[1]]],
+          [[a[1], r[1]], [a[1], l[1]], [a[1], a[1]], [a[1], t[1]]],
+          [[t[1], r[1]], [t[1], l[1]], [t[1], a[1]], [t[1], t[1]]],
+          [[r[1], r[1]], [r[1], l[1]], [r[1], a[1]], [r[1], t[1]]],
+        ], [
+          [[a[1], r[1]], [a[1], l[1]], [a[1], a[1]], [a[1], t[1]]],
+          [[t[1], r[1]], [t[1], l[1]], [t[1], a[1]], [t[1], t[1]]],
+          [[r[1], r[1]], [r[1], l[1]], [r[1], a[1]], [r[1], t[1]]],
+          [[l[1], r[1]], [l[1], l[1]], [l[1], a[1]], [l[1], t[1]]],
+        ], [
+          [[t[1], r[1]], [t[1], l[1]], [t[1], a[1]], [t[1], t[1]]],
+          [[r[1], r[1]], [r[1], l[1]], [r[1], a[1]], [r[1], t[1]]],
+          [[l[1], r[1]], [l[1], l[1]], [l[1], a[1]], [l[1], t[1]]],
+          [[a[1], r[1]], [a[1], l[1]], [a[1], a[1]], [a[1], t[1]]],
+        ]]
+
+        adverbs     = [ adverbs_sanity, adverbs_insanity ]
+        current_sanity  = File.read("_data/npc/dialogue/sanity.txt").to_i # sanity_context.sample
+
+        context_window = [0, 1, 2, 3]
+        row_options    = [0, 1, 2, 3]
+        col_options    = [0, 1, 2, 3]
+        arr_options    = [0, 1]
+
+        cur_con = context_window.sample
+        cur_row =    row_options.sample
+        cur_col =    col_options.sample
+        cur_arr =    arr_options.sample
+
+        chosen_adverb = adverbs[current_sanity][cur_con][cur_row][cur_col][cur_arr]
+
+        current_phrase = "#{chosen_word_class} #{chosen_noun} #{chosen_adjective}#{chosen_subject} #{chosen_verb} #{chosen_adverb}"
+  
+        current_phrase
+
+        puts current_phrase
+      end
+    end
+  end
+
+  class ObeliskNuerisupu
+    #################################################################################
+    #                         Japanese Negative Constraints                         #
+    #################################################################################
+    def self.encrire(input)
+      print input
+    end
+
+    def self.encrireln(input)
+      puts input
+    end
+
+    def self.nai(fact_one, fact_two)
+      Obelisk::ObeliskNuerisupu.encrireln("Nai [ #{fact_one} ] anata [ #{fact_two} ], ")
+
+      [fact_one, fact_two]
+    end
+
+    def shikasa(fact_three)
+      Obelisk::ObeliskNuerisupu.encrireln("shikashi #{fact_three}")
+
+      fact_three
+    end
+
+    #### Ninhongo Parlez-Vous
+    def self.seibetsu(word_class)
+      "#{word_class}"
+    end
+
+    def self.ejento(agent_name)
+      "#{agent_name}"
+    end
+
+    def self.keiyoshi(adjective)
+      "#{adjective}"
+    end
+
+    def self.shudai(subject)
+      "#{subject}"
+    end
+
+    def self.doshi(action)
+      "#{action}"
+    end
+
+    def self.fukishi(adverb)
+      "#{adverb}"
+    end
+
+    def self.nihongo(arg1, arg2, arg3, arg4, arg5, arg6)
+      Obelisk::ObeliskNuerisupu.encrireln("#{arg1} #{arg2} #{arg3} #{arg4} #{arg5} #{arg6}")
+    end
+
+    #################################################################################
+    #                             Japanese Ternary Labels                           #
+    #################################################################################
+    ## Japanese Contrastive
+    def self.sore(a, b)  
+      sore = [ a, b ]
+  
+      File.open("data/japanese/positive/sore_a.txt", "a") { |f|
+        f.puts sore[0]
+      }
+
+      File.open("data/japanese/positive/sore_b.txt", "a") { |f|
+        f.puts sore[1]
+      }
+
+      "Sora wa #{a} #{b}"
+    end
+
+    def self.shikashi(a, b)  
+      shikashi = [ a, b ]
+
+      File.open("data/japanese/positive/shikashi_a.txt", "a") { |f|
+        f.puts shikashi[0]
+      }
+
+      File.open("data/japanese/positive/shikashi_b.txt", "a") { |f|
+        f.puts shikashi[1]
+      }
+
+      "Shikashi wa #{a} #{b}"
+    end
+
+    def self.matawa(a, b, c, d)
+      matawa_nest = [ b, c ]
+      matawa_est  = d
+
+      File.open("data/japanese/positive/matawa_nest_a.txt", "a") { |f|
+        f.puts matawa_nest[0]
+      }
+
+      File.open("data/japanese/positive/matawa_nest_b.txt", "a") { |f|
+        f.puts matawa_nest[1]
+      }
+  
+      File.open("data/japanese/positive/matawa_est.txt", "a") { |f|
+        f.puts shikashi
+      }
+
+      "Matawa sora #{a} ni wa #{b} naishi #{c}, shikashi wa #{c}."
+    end
+
+    ## Hanten-Ronri
+    def self.nisore(a, b)  
+      nisore = [ a, b ]
+
+      File.open("data/japanese/negative/nisore_a.txt", "a") { |f|
+        f.puts nisore[0]
+      }
+
+      File.open("data/japanese/negative/nisore_b.txt", "a") { |f|
+        f.puts nisore[1]
+      }
+
+      "Sono gyaku sora wa #{a} #{b}"
+    end
+
+    def self.nishikashi(a, b)
+      "Sono gyaku shikashi wa #{a} #{b}."
+
+      nishikashi = [ a, b ]
+
+      File.open("data/japanese/negative/matawa_nest_a.txt", "a") { |f|
+        f.puts nishikashi[0]
+      }
+
+      File.open("data/japanese/negative/matawa_nest_b.txt", "a") { |f|
+        f.puts nishikashi[1]
+      }
+    end
+
+    def self.nimatawa(a, b, c, d)
+      "Sono gyaku matawa sora #{a} wa #{b} naishi #{c}, shikashi wa #{d}"
+
+      nimatawa_nest = [ b, c ]
+      nimatawa_est  = d
+
+      File.open("data/japanese/negative/nimatawa_nest_a.txt", "a") { |f|
+        f.puts nimatawa_nest[0]
+      }
+
+      File.open("data/japanese/negative/nimatawa_nest_b.txt", "a") { |f|
+        f.puts nimatawa_nest[1]
+      }
+  
+      File.open("data/japanese/negative/nimatawa_est.txt", "a") { |f|
+        f.puts nimatawa_est
+      }
+    end
+
+    def self.soflo(assertion, upper_boundary)    
+      bot_name = %Q(BIANCA)
+
+      sore_kosan = Proc.new { | x, interval |
+        x > interval ? %Q(#{bot_name}: #{x} has crossed the upper boundary.) : %Q(#{bot_name}: #{x} has not crossed the upper boundary.)
+      }
+
+      puts sore_kosan.call(assertion, upper_boundary)
+    end
+
+    ## Shikashi float
+    def self.shiflo(assertion, lower_boundary)
+      bot_name = %Q(BIANCA)
+
+      shikashi_kosan = Proc.new { | x, interval |
+        x < interval ? %Q(#{bot_name}: #{x} has crossed the limit below the lower boundary.) : %Q(#{bot_name}: #{x} has not crossed the limit below the lower boundary.)
+      }
+
+      puts shikashi_kosan.call(assertion, lower_boundary)
+    end
+
+    ## Matawa float
+    def self.maflo(assertion, upper_boundary, lower_boundary)
+      bot_name = %Q(BIANCA)
+
+      matawa_kosan = Proc.new { | x, first_interval, second_interval |
+        x > first_interval && x < second_interval ? %Q(#{bot_name}: #{x} is floating between boundary conditions #{first_interval} and #{second_interval}.) : %Q(#{bot_name}: #{x} is not floating between boundary conditions #{first_interval} and #{second_interval}.)
+      }
+
+      puts matawa_kosan.call(assertion, upper_boundary, lower_boundary)
+    end
+
+    #################################################################################
+    #                           French Negative Constraints                         #
+    #################################################################################
+    def self.ne(first_noun, second_noun)
+      puts "Non #{first_noun} ou #{second_noun}, "
+
+      [first_noun, second_noun]
+    end
+
+    def self.mais(third_noun)
+      puts "mais cest #{third_noun}."
+
+      third_noun
+    end
+
+    ################################################################################################
+    #                                        French Actions                                        #
+    ################################################################################################
+    def self.mange(a, b)
+      "Mange un #{a} en #{b}."
+    end
+
+    def self.coupe(a, b)
+      "Coupe un #{a} en #{b}."
+    end
+
+    def self.cuicre(a, b)
+      "Cuicre un #{a} en #{b}."
+    end
+
+    def self.baguette(a, b)
+      "Baguette un #{a} en #{b}."
+    end
+
+    def self.guillotine(verb, subject)
+      "Guillotine #{verb} #{subject}."
+    end
+
+    def self.ax_head(verb, subject)
+      "Tete Du Crescent #{verb} #{subject}."
+    end
+
+    def self.roboparle(verb, subject)
+      "Le robo #{verb} #{subject}."
+    end
+
+    def self.parle_a_robo(object, subject, verb, your_name)
+      "#{your_name}: #{subject} #{verb} #{object}"
+    end
+
+    #################################################################################
+    #                              Clothing Categorization                          #
+    #################################################################################
+    def self.bow_color(c)
+      c = c.strip
+
+      "Le colour de la archette est #{c}."
+    end
+
+    def self.bow_shape(s)
+      s = s.strip
+
+      "Le shape de la archette est #{s}."
+    end
+
+    def self.bow_size(w)
+      w = w.strip
+
+      "Le taille de la archette est #{w}."
+    end
+
+    def self.hairbows(color, shape, size)
+      if color.nil? or shape.nil? or size.nil?
+        puts "Error: Color, Shape, or Size has not been defined."
+      else
+        new_color = bow_color(color)
+        new_shape = bow_shape(shape)
+        new_size  = bow_size(size)
+
+        print [new_color, new_shape, new_size]
+
+        new_color = new_color.downcase.tr ".", ""
+        new_color = new_color.downcase.tr " ", "_"
+
+        new_shape = new_shape.downcase.tr ".", ""
+        new_shape = new_shape.downcase.tr " ", "_"
+
+        new_size = new_size.downcase.tr ".", ""
+        new_size = new_size.downcase.tr " ", "_"
+
+        Obelisk::DataRecycling.obelisk_script(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+        File.open("scripts/hairbow_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.c_color(s)
+      s = s.strip
+
+      "Le colour de la corsette est #{s}."
+    end
+
+    def self.c_shape(s)
+      s = s.strip
+
+      "Le shape de la corsette est #{s}."
+    end
+
+    def self.c_size(w)
+      w = w.strip
+
+      "Le taille de la corsette est #{w}."
+    end
+
+    def self.corsets(color, shape, size)
+      if color.nil? or shape.nil? or size.nil?
+        puts "Error: Color, Shape, and Size has not been defined."
+      else
+        new_color = c_color(color)
+        new_shape = c_shape(shape)
+        new_size  = c_size(size)
+
+        print [new_color, new_size, new_color]
+
+        new_color = new_color.downcase.tr ".", ""
+        new_color = new_color.downcase.tr " ", "_"
+
+        new_shape = new_shape.downcase.tr ".", ""
+        new_shape = new_shape.downcase.tr " ", "_"
+
+        new_size = new_size.downcase.tr ".", ""
+        new_size = new_size.downcase.tr " ", "_"
+
+        Obelisk::DataRecycling.obelisk_script(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+        File.open("scripts/corset_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+        }
+      end
+
+      puts " "
+    end
+
+    def s_color(s)
+      s = s.strip
+
+      "Le colour de le jupe est #{s}."
+    end
+
+    def self.s_shape(s)
+      s = s.strip
+
+      "Le shape de le jupe est #{s}."
+    end
+
+    def self.s_size(w)
+      w = w.strip
+
+      "Le taille de le jupe est #{w}."
+    end
+
+    def self.skirts(color, shape, size)
+      if color.nil? or shape.nil? or size.nil?
+        puts "Error: Color, Shape, and Size has not been defined."
+      else
+        new_color = s_color(color)
+        new_shape = s_shape(shape)
+        new_size  = s_size(size)
+
+        print [new_color, new_size, new_size]
+
+        new_color = new_color.downcase.tr ".", ""
+        new_color = new_color.downcase.tr " ", "_"
+
+        new_shape = new_shape.downcase.tr ".", ""
+        new_shape = new_shape.downcase.tr " ", "_"
+
+        new_size = new_size.downcase.tr ".", ""
+        new_size = new_size.downcase.tr " ", "_"
+
+        Obelisk::DataRecycling.obelisk_script(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+        File.open("scripts/skirt_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.st_color(s)
+      s = s.strip
+
+      "Le colour de le bas est #{s}."
+    end
+
+    def self.st_shape(s)
+      s = s.strip
+
+      "Le shape de le bas est #{s}."
+    end
+
+    def self.st_size(w)
+      w = w.strip
+
+      "Le taille de le bas est #{w}."
+    end
+
+    def stockings(color, shape, size)
+      if color.nil? or shape.nil? or size.nil?
+        puts "Error: Color, Shape, and Size has not been defined."
+      else
+        new_color = st_color(color)
+        new_shape = st_shape(shape)
+        new_size  = st_size(size)
+
+        print [new_color, new_size, new_size]
+
+        new_color = new_color.downcase.tr ".", ""
+        new_color = new_color.downcase.tr " ", "_"
+
+        new_shape = new_shape.downcase.tr ".", ""
+        new_shape = new_shape.downcase.tr " ", "_"
+
+        new_size = new_size.downcase.tr ".", ""
+        new_size = new_size.downcase.tr " ", "_"
+
+        Obelisk::DataRecycling.obelisk_script(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+        File.open("scripts/stocking_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.sa_color(s)
+      s = s.strip
+
+      "Le colour de le sabots de bois est #{s}."
+    end
+
+    def self.sa_shape(s)
+      s = s.strip
+
+      "Le shape de le sabots de bois  est #{s}."
+    end
+
+    def self.sa_size(w)
+      w = w.strip
+
+      "Le taille de le sabots de bois  est #{w}."
+    end
+
+    def self.clogs(color, shape, size)
+      if color.nil? or shape.nil? or size.nil?
+        puts "Error: Color, Shape, and Size has not been defined."
+      else
+        new_color = sa_color(color)
+        new_shape = sa_shape(shape)
+        new_size  = sa_size(size)
+
+        print [new_color, new_size, new_size]
+
+        new_color = new_color.downcase.tr ".", ""
+        new_color = new_color.downcase.tr " ", "_"
+
+        new_shape = new_shape.downcase.tr ".", ""
+        new_shape = new_shape.downcase.tr " ", "_"
+
+        new_size = new_size.downcase.tr ".", ""
+        new_size = new_size.downcase.tr " ", "_"
+
+        Obelisk::DataRecycling.obelisk_lisps(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+        File.open("scripts/clogs_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+        }
+      end
+
+      puts " "
+    end
+
+    #################################################################################
+    #                            Deso Yokesavonos Ilepoheto                         #
+    #################################################################################
+    def self.soap_color(color)
+      color = color.strip
+
+      "Cette savon est #{color}. "
+    end
+
+    def self.soap_scent(scent)
+      scent = scent.strip
+
+      "Cest aussi un parfum de #{scent}. "
+    end
+
+    def self.soap_oil(ov)
+      ov = ov.strip
+
+      "Le huile est #{ov}."
+    end
+
+    def self.soap_regions(color, scent, oil_variety)
+      if color.nil? or scent.nil? or oil_variety.nil?
+        puts "Error: Color, Shape, or Oil Variety has not been defined."
+      else
+        new_color = soap_color(color)
+        new_scent = soap_scent(scent)
+        new_oil   = soap_oil(oil_variety)
+
+        print [new_color, new_scent, new_oil]
+
+        Obelisk::DataRecycling.obelisk_script(%Q(cfs :color #{new_color} :shape #{new_shape} :oil_variety #{new_oil}))
+
+        File.open("scripts/soap_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :oil_variety #{new_oil}}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.chicken_gender(g)
+      g = g.strip
+
+      "Le poulet est un #{g}."
+    end
+
+    def self.chicken_size(s)
+      s = s.strip
+
+      "Cest aussi le taille #{s}."
+    end
+
+    def self.chicken_weight(w)
+      w = w.strip
+
+      "Et finis, cest poids est #{w}."
+    end
+
+    def self.chicken_breed(gender, size, weight)
+      if gender.nil? or size.nil? or weight.nil?
+        puts "Error: Gender, Shape, or Size has not been defined."
+      else
+        new_gender = chicken_gender(gender)
+        new_size   = chicken_size(size)
+        new_weight = chicken_weight(weight)
+
+        print [new_gender, new_size, new_weight]
+
+        urn_logic = "(cfs :gender #{new_gender} :size #{new_size} :weight #{new_weight})"
+
+        Obelisk::DataRecycling.obelisk_script(urn_logic)
+
+        File.open("scripts/soap_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :gender #{new_gender} :size #{new_size} :weight #{new_weight})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.gemstone_variety(v)
+      v = v.strip
+
+      "Le variete de gemme est #{v}."
+    end
+
+    def self.gemstone_size(s)
+      s = s.strip
+
+      "Le taille de gemme est #{s}."
+    end
+
+    def self.gemstone_weight(w)
+      w = w.strip
+
+      "Le poids de gemme est #{w}."
+    end
+
+    def self.feed_chicken(variety, size, weight)
+      if variety.nil? or size.nil? or weight.nil?
+        puts "Error: Color, Shape, or Size has not been defined."
+      else
+        new_variety = gemstone_variety(variety)
+        new_size    = gemstone_size(size)
+        new_weight  = gemstone_weight(weight)
+
+        print [new_variety, new_size, new_weight]
+
+        urn_logic = "(cfs :variety #{new_variety} :size #{new_size} :weight #{new_weight})"
+
+        Obelisk::DataRecycling.obelisk_script(urn_logic)
+
+        File.open("scripts/feed_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :gender #{new_gender} :size #{new_size} :weight #{new_weight})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.roche_variety(v)
+      v = v.strip
+
+      "Le variete de roche est #{v}."
+    end
+
+    def self.roche_shape(s)
+      s = s.strip
+
+      "Le shape de roche est #{s}."
+    end
+
+    def self.roche_size(s)
+      s = s.strip
+
+      "Le taille de roche est #{s}."
+    end
+
+    def self.roche_weight(w)
+      w = w.strip
+
+      "Le poids de roche est #{w}."
+    end
+
+    def self.stone_type(variety, shape, size, weight)
+      if variety.nil? or shape.nil? or size.nil? or weight.nil?
+        puts "Error: Variety, Shape, Size, or Weight has not been defined."
+      else
+        new_variety = roche_variety(variety)
+        new_shape   = roche_shape(shape)
+        new_size    = roche_size(size)
+        new_weight  = roche_weight(weight)
+
+        print [new_variety, new_shape, new_size, new_weight]
+
+        urn_logic = "(cfs :variety #{new_variety} :shape #{new_shape} :size #{new_size} :weight #{new_weight})"
+
+        Obelisk::DataRecycling.obelisk_script(urn_logic)
+
+        File.open("scripts/feed_trivia.awa", "w") { |f|
+          f.puts %Q{(cfs :variety #{new_variety} :shape #{new_shape} :size #{new_size} :weight #{new_weight})}
+        }
+      end
+
+      puts " "
+    end
+
+    def self.cat_variety(v)
+      v = v.strip
+
+      "Le variete de le chat est #{v}."
+    end
+
+    def self.cat_color(s)
+      s = s.strip
+
+      "Le shape de le chat est #{s}."
+    end
+
+    def self.cat_size(s)
+      s = s.strip
+
+      "Le taille de le chat est #{s}."
+    end
+
+    def self.cat_weight(w)
+      w = w.strip
+
+      "Le poids de le chat est #{w}."
+    end
+
+    def self.cat_variety(species, color, size, weight)
+      if species.nil? or color.nil? or size.nil? or weight.nil?
+        "Error: Species, Color, Size, or Weight has not been defined."
+      else
+        new_variety = cat_variety(variety)
+        new_color   = cat_color(color)
+        new_size    = cat_size(size)
+        new_weight  = cat_weight(weight)
+
+        print [new_variety, new_color, new_size, new_weight]
+      end
+
+      puts " "
+    end
+
+    def self.designate_c_item(selected_item)
+      puts selected_item
+      puts " is cursed by the dispenser "
+    end
+
+    def self.designate_p_item(selected_item)
+      puts selected_item
+      puts " is vended by "
+    end
+
+    def self.designate_dispenser(selected_dispenser)
+      puts selected_dispenser
+    end
+
+    def self.cursed_status(item, dispenser)
+      if item.nil? or dispenser.nil?
+        "Error: Item or Dispenser has not been defined."
+      else
+        designate_item(item)
+        designate_dispenser(dispenser)
+      end
+    end
+
+    def self.purchase_status(item, dispenser)
+      if item.nil? or dispenser.nil?
+        "Error: Item or Dispenser has not been defined."
+      else
+        designate_item(item)
+        designate_dispenser(dispenser)
+      end
+    end
+
+    #################################################################################
+    #                             French Ternary Negation                           #
+    #################################################################################
+    def self.cint(assertion, upper_boundary)    
+      bot_name = %Q(BIANCA)
+
+      cette_nombre = Proc.new { | x, interval |
+        x > interval ? %Q(#{bot_name}: #{x} has crossed the upper boundary.) : %Q(#{bot_name}: #{x} has not crossed the upper boundary.)
+      }
+
+      puts cette_nombre.call(assertion, upper_boundary)
+    end
+
+    def self.mint(assertion, lower_boundary)
+      bot_name = %Q(BIANCA)
+
+      maisette_nombre = Proc.new { | x, interval |
+        x < interval ? %Q(#{bot_name}: #{x} has crossed the limit below the lower boundary.) : %Q(#{bot_name}: #{x} has not crossed the limit below the lower boundary.)
+      }
+
+      puts maisette_nombre.call(assertion, lower_boundary)
+    end
+
+    def self.sint(assertion, lower_boundary, upper_boundary)
+      bot_name = %Q(BIANCA)
+
+      sinon_nombre = Proc.new { | x, first_interval, second_interval |
+        x > first_interval && x < second_interval ? %Q(#{bot_name}: #{x} is floating between boundary conditions #{first_interval} and #{second_interval}.) : %Q(#{bot_name}: #{x} is not floating between boundary conditions #{first_interval} and #{second_interval}.)
+      }
+
+      puts sinon_nombre.call(assertion, lower_boundary, upper_boundary)
+    end
+
+    ################################################################################################
+    #                                Who What When Where Why How                                   #
+    ################################################################################################
+    def self.nom(a)
+      "Mes nom est #{a}."
+    end
+
+    def self.buttai(b)
+      "Cest un/une #{b}."
+    end
+
+    def self.temps(c)
+      "Le temp est #{c}."
+    end
+
+    def fukin(d)
+      "Je suis en le voisinage de #{d}."
+    end
+
+    def self.motif(e)
+      "Mes raison pour ce est #{e}."
+    end
+
+    def self.hono(f)
+      "Mois methode pour le fabrication mes objectifs est #{f}."
+    end
+
+    def self.jiko(a, b, c)
+      "Vous avoir damande moi #{a} a propos #{b} par #{c}."
+    end
+
+    ## Unite specific people at a time and place
+    def self.unir(a, b, c)
+      "Je avoir unif avec #{a} avec #{b} a #{c}."
+    end
+
+    def self.genkei(a)
+      "Je suis un etudiant a propos #{a}."
+    end
+
+    def self.musee_comprime(a)
+      "cette musee comprime #{a}."
+    end
+
+    def self.noremodei(a)
+      "Cette #{a} est noermodeios."
+    end
+
+    def self.ninom(a)
+      "Mes nom est ne #{a}."
+    end
+
+    def self.nibuttai(b)
+      "Cest non un/une #{b}."
+    end
+
+    def self.netemps(c)
+      "Le temp est ne #{c}."
+    end
+
+    def self.nifukin(d)
+      "Je suis ne en le voisinage de #{d}."
+    end
+
+    def self.nemotif(e)
+      "Mes raison pour ce est ne #{e}."
+    end
+
+    def self.nihono(f)
+      "Mois methode pour le fabrication mes objectifs est ne #{f}."
+    end
+
+    ## Disunification
+    def self.neunir(a, b, c)
+      "Je ne avoir unif avec #{a} avec #{b} a #{c}."
+    end
+
+    def self.nijiko(a, b, c)
+      "Vous ne avoir damande moi #{a} a propos #{b} par #{c}."
+    end
+
+    def self.nigenkei(a)
+      "Je suis ne un etudiant a propos #{a}."
+    end
+  end
+
+  class DataRecycling
+    #################################################################################################################
+    #                                                Memoricimetiere                                                #
+    #################################################################################################################
+    def self.obelisk(old_data)
+      old_graveyard = File.readlines("mce/urn.txt").shuffle
+      size_limit    = old_graveyard.size.to_i
+      index = 0
+
+      File.open("mce/urn.txt", "w") { |f|
+        f.puts old_data
+      
+        size_limit.times do
+          f.puts old_graveyard[index]
+          
+          index = index + 1
+        end
+      }
+    end
+
+    def self.obelisk_shell(old_data)
+      old_graveyard = File.readlines("mce/surn.txt").shuffle
+      size_limit    = old_graveyard.size.to_i
+      index = 0
+
+      File.open("mce/surn.txt", "w") { |f|
+        f.puts old_data
+      
+        size_limit.times do
+          f.puts old_graveyard[index]
+          
+          index = index + 1
+        end
+      }
+    end
+
+    def self.obelisk_script(old_data)
+      old_graveyard = File.readlines("mce/aurn.txt").shuffle
+      size_limit    = old_graveyard.size.to_i
+      index = 0
+
+      File.open("mce/aurn.txt", "w") { |f|
+        f.puts old_data
+      
+        size_limit.times do
+          f.puts old_graveyard[index]
+          
+          index = index + 1
+        end
+      }
+    end
+
+    def self.three_plot_burial(father, mother, child)
+      buried_fathers  = File.readlines("mce/family/father.txt").uniq.sort
+      buried_mothers  = File.readlines("mce/family/mother.txt").uniq.sort
+      buried_children = File.readlines("mce/family/child.txt").uniq.sort
+
+      File.open("mce/family/father.txt", "w") { |f|
+        f.puts father
+        f.puts buried_fathers
+      }
+  
+      File.open("mce/family/mother.txt", "w") { |f|
+        f.puts mother
+        f.puts buried_mothers
+      }
+  
+      File.open("mce/family/child.txt", "w") { |f|
+        f.puts child
+        f.puts buried_children
+      }
+    end
+
+    def self.four_plot_burial(father, mother, brother, sister)
+      buried_fathers  = File.readlines("mce/family/father.txt").uniq.sort
+      buried_mothers  = File.readlines("mce/family/mother.txt").uniq.sort
+      buried_brothers = File.readlines("mce/family/brother.txt").uniq.sort
+      buried_sisters  = File.readlines("mce/family/sister.txt").uniq.sort
+
+      File.open("mce/family/father.txt", "w") { |f|
+        f.puts father
+        f.puts buried_fathers
+      }
+  
+      File.open("mce/family/mother.txt", "w") { |f|
+        f.puts mother
+        f.puts buried_mothers
+      }
+  
+      File.open("mce/family/brother.txt", "w") { |f|
+        f.puts brother
+        f.puts buried_brothers
+      }
+
+      File.open("mce/family/sister.txt", "w") { |f|
+        f.puts sister
+        f.puts buried_sisters
+      }
+    end
+
+    def self.scatter_ashes
+      old_graveyard = File.readlines("mce/urn.txt").uniq.sort.shuffle
+      size_limit    = old_graveyard.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_graveyard[index]
+  
+        index = index + 1
+      end
+    end
+
+    def self.scatter_shells
+      old_graveyard = File.readlines("mce/surn.txt").uniq.sort.shuffle
+      size_limit    = old_graveyard.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        system("#{old_graveyard[index]}")
+  
+        index = index + 1
+      end
+    end
+
+    def self.scatter_lisps
+      old_graveyard = File.readlines("mce/aurn.txt").uniq.sort.shuffle
+      size_limit    = old_graveyard.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        total_lines = old_graveyard.size.to_i
+        index       = 0
+
+        if total_lines > 0
+          total_lines.times do
+            current_line = read_file[index]
+  
+            current_line = current_line.tr ")", ""  
+            current_line = current_line.tr "(", ""
+            current_line = current_line.tr %q("), %q()
+
+            tokens       = current_line.split(/ /)
+            total_tokens = tokens.size.to_i
+            token_index  = 0
+    
+            ## The actual tokens youll be parsing.
+            parsed_tokens = [] #of String
+    
+            if total_tokens > 0
+              total_tokens.times do
+                current_token = tokens[token_index]
+ 
+                parsed_tokens = parsed_tokens.push(current_token)
+    
+                token_index = token_index + 1
+              end
+        
+              ###################################################################################################
+              #                                         Document Parsing                                        #
+              ###################################################################################################  
+              if    parsed_tokens[0] == %Q(arc)
+                Obelisk::ObeliskNuerisupu.hairbows(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(cor)
+                Obelisk::ObeliskNuerisupu.corsets(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(jup)
+                Obelisk::ObeliskNuerisupu.skirts(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(bas)
+                Obelisk::ObeliskNuerisupu.stockings(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(sab)
+                Obelisk::ObeliskNuerisupu.clogs(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(srg)
+                Obelisk::ObeliskNuerisupu.soap_region(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(pol)
+                Obelisk::ObeliskNuerisupu.chicken_breed(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(pom)
+                Obelisk::ObeliskNuerisupu.feed_chicken(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+              elsif parsed_tokens[0] == %Q(rty)
+                Obelisk::ObeliskNuerisupu.stone_type(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4])
+              elsif parsed_tokens[0] == %Q(cus)
+                Obelisk::ObeliskNuerisupu.puts curse_status(parsed_tokens[1], parsed_tokens[2])
+              elsif parsed_tokens[0] == %Q(ach)
+                Obelisk::ObeliskNuerisupu.puts purchase_status(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4])
+              elsif parsed_tokens[0] == %Q(cin)
+                Obelisk::ObeliskNuerisupu.cint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+              elsif parsed_tokens[0] == %Q(min)
+                Obelisk::ObeliskNuerisupu.mint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+              elsif parsed_tokens[0] == %Q(sin)
+                Obelisk::ObeliskNuerisupu.sint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+              elsif parsed_tokens[0] == %Q(ne)
+                Obelisk::ObeliskNuerisupu.ne(parsed_tokens[1], parsed_tokens[2])
+              elsif parsed_tokens[0] == %Q(mais)
+                Obelisk::ObeliskNuerisupu.mais(parsed_tokens[1], parsed_tokens[2])
+
+              ###################################################################################################
+              #                                 Self Internalizing Representation                               #
+              ###################################################################################################
+              #elsif parsed_tokens[0] == "mmy"
+              #  puts measure_myth(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7])
+              #elsif parsed_tokens[0] == "tco3"
+              #  tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4]])
+              #elsif parsed_tokens[0] == "tco4"
+              #  tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5]])
+              #elsif parsed_tokens[0] == "tco5"
+              #  tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6]])
+              #elsif parsed_tokens[0] == "tco6"
+              #  tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7]])
+              #elsif parsed_tokens[0] == "tco7"
+              #  tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7], parsed_tokens[8]])
+              #elsif parsed_tokens[0] == "cfs"
+              #  print counterfact_selection(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6])
+              #  puts " "
+              #elsif parsed_tokens[0] == "nfs"
+              #  print counterfact_selection(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6])
+              #  puts " "
+              #elsif parsed_tokens[0] == "dms"
+              #  search_limit = parsed_tokens[1].to_i
+
+              #  search_limit.times do
+              #    dynamic_mode_switcher
+              #  end
+
+              #  current_probability = File.read(%Q(data/statistics/probability/current_probability.txt)).to_f
+              #  current_information = File.read(%Q(data/statistics/label/current_information.txt))
+
+              #  puts %Q(#{current_probability} #{current_information})
+              #elsif parsed_tokens[0] == %Q(asoka)
+              #  get_radius           = parsed_tokens[0].to_i
+              #  circumference_values = calculate_circumference(get_radius)
+
+              #  canon_power       = parsed_tokens[1].to_i
+              #  established_canon = parsed_tokens[2]
+              #  counterfactual    = parsed_tokens[3]
+
+              #  encrire(asoka(circumference_values[2], calculate_depth(circumference_values[2], 6), canon_power, established_canon, counterfactual))
+              #  encrireln(" ")
+
+              ###################################################################################################
+              #                                           Quality Of Life                                       #
+              ###################################################################################################
+              elsif parsed_tokens[0] == %Q(vio)
+                system(%Q(clear))
+              elsif parsed_tokens[0] == %Q(ext)
+                abort
+              else
+                current_token = tokens[token_index]
+        
+                puts current_token
+              end
+  
+              index = index + 1
+            end
+          end
+        else
+          current_line = read_file[index]
+   
+          puts current_line
+        end
+
+        index = index + 1
+      end
+    end
+
+
+    def self.scatter_three_ashes
+      old_fathers  = File.readlines(%Q(mce/family/father.txt)).uniq.sort.shuffle
+      old_mothers  = File.readlines(%Q(mce/family/mother.txt)).uniq.sort.shuffle
+      old_children = File.readlines(%Q(mce/family/child.txt)).uniq.sort.shuffle
+
+      size_limit    = old_fathers.size.to_i
+      index         = 0
+  
+      ## Scatters fathers ashes in the wind.
+      size_limit.times do
+        puts old_fathers[index]
+  
+        index = index + 1
+      end
+  
+      ## Scatters mothers ashes in the wind
+      size_limit    = old_mothers.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_mothers[index]
+  
+        index = index + 1
+      end
+
+      ## Scatters childrens ashes in the wind.
+      size_limit    = old_children.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_children[index]
+  
+        index = index + 1
+      end
+    end
+
+    def self.scatter_four_ashes
+      old_fathers  = File.readlines(%Q(mce/family/father.txt)).uniq.sort.shuffle
+      old_mothers  = File.readlines(%Q(mce/family/mother.txt)).uniq.sort.shuffle
+      old_brothers = File.readlines(%Q(mce/family/brother.txt)).uniq.sort
+      old_sister   = File.readlines(%Q(mce/family/sister.txt)).uniq.sort
+
+      size_limit    = old_fathers.size.to_i
+      index         = 0
+  
+      ## Scatters fathers ashes in the wind.
+      size_limit.times do
+        puts old_fathers[index]
+  
+        index = index + 1
+      end
+  
+      ## Scatters mothers ashes in the wind
+      size_limit    = old_mothers.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_mothers[index]
+  
+        index = index + 1
+      end
+
+      ## Scatters brothers ashes in the wind.
+      size_limit    = old_brothers.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_brothers[index]
+  
+        index = index + 1
+      end
+
+      ## Scatters sisters ashes in the wind.
+      size_limit    = old_sister.size.to_i
+      index         = 0
+  
+      size_limit.times do
+        puts old_sister[index]
+  
+        index = index + 1
+      end
+    end
+
+    def self.yonagumi(current_year, specific_event)
+      age_of_yonagumi = 11000.0
+  
+      age_percent = age_of_yonagumi - current_year
+  
+      %Q( For a point of comparison: Yonagumi is #{age_percent} years old as of #{current_year}.)
+
+      Obelisk::DataRecycling.obelisk(%Q(For a point of comparison: Yonagumi is #{age_percent} years old as of #{current_year}.))
+      Obelisk::DataRecycling.scatter_ashes
+    end
+
+    def self.age_comparison(current_year, age_historical, specific_event)
+      years_ago = current_year - age_historical
+  
+      print %Q(The current year is #{current_year}, #{specific_event} is #{years_ago} years ago.)
+      puts Obelisk::DataRecycling.yonagumi(2026.0, %Q(#{specific_event}))
+      
+      Obelisk::DataRecycling.obelisk(%Q(The current year is #{current_year}, #{specific_event} is #{years_ago} years ago.))
+    end
+  end
+
+  module NeuroSymbolic
+    class BasicML
+      #######################################################################################
+      #                         Genetic Reinforcement Naive Bayes                           #
+      #######################################################################################
+      def self.generate_bounded_probability
+        assumed_percentage = "0."
+
+        alpha = ["c", "d", "e", "f", "g", "a", "b"]
+  
+        a = alpha.sample
+        b = alpha.sample
+        c = alpha.sample
+        d = alpha.sample
+        e = alpha.sample
+        f = alpha.sample
+        g = alpha.sample
+  
+        "#{assumed_percentage}#{c}#{d}#{e}#{f}#{g}#{a}#{b}"
+      end
+
+      def self.convert_to_piano_to_percent(fake_percent)
+        # if number is 0.eaaaaf, convert to real percent
+        real_percent = fake_percent.tr ".cdefgab", ".0123456"
+        real_percent = real_percent.to_f
+
+        real_percent
+      end
+
+      def self.slogprob(lowest_probability, highest_probability)
+        logarithm = lowest_probability / highest_probability
+  
+        logarithm
+      end
+
+      def self.get_statistics(a1, a2, b1, b2, c1, c2)
+        a = [ a1, a2 ]
+        b = [ b1, b2 ]
+        c = [ c1, c2 ]
+
+        matrix = [
+          [[a[0], a[0]], [a[0], b[0]], [a[0], c[0]]],
+          [[b[0], a[0]], [b[0], b[0]], [b[0], c[0]]],
+          [[c[0], a[0]], [c[0], b[0]], [c[0], c[0]]],
+        ], [
+          [[a[1], a[1]], [a[1], b[1]], [a[1], c[1]]],
+          [[b[1], a[1]], [b[1], b[1]], [b[1], c[1]]],
+          [[c[1], a[1]], [c[1], b[1]], [c[1], c[1]]],
+        ], [
+          [[0.50, 0.50], [0.50, 0.50], [0.50, 0.50]],
+          [[0.50, 0.50], [0.50, 0.50], [0.50, 0.50]],
+          [[0.50, 0.50], [0.50, 0.50], [0.50, 0.50]],
+        ]
+
+        label_type       = matrix[0]
+        definition_type  = matrix[1]
+        probability_type = matrix[2]
+  
+        row_probability = 0.33
+        col_probability = 0.33
+  
+        graph_selection = row_probability * col_probability
+
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+  
+        current_label       = label_type[cur_row][cur_col][cur_arr]
+        current_definition  = definition_type[cur_row][cur_col][cur_arr]
+  
+        base_probability = probability_type[cur_row][cur_col][cur_arr].to_i
+  
+        current_probability = base_probability + graph_selection
+  
+        current_probability = current_probability + current_probability
+        current_information = "#{current_label} #{current_definition}"
+  
+        puts "[ #{current_label} #{current_definition} ]"
+  
+        #File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        #File.write("data/statistics/label/current_information.txt",       current_information)
+
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",            current_information)
+        File.write("data/statistics/description/current_description.txt",      current_definition)
+        File.write("data/statistics/symbol/current_label.txt",                 current_label)
+      end
+
+      def self.gain
+        current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+        current_information = File.read("data/statistics/label/current_information.txt")
+
+        if current_probability > 0.999999999999999999
+          current_probability = 0.9 / current_probability
+        end
+  
+        case current_probability
+        when 0.003921569000000000..0.287225000000000000
+          "Im confident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.287225000000000001..0.522225000000000000
+          "Im less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.522225000000000001..0.756112500000000000
+          "Im almost sure it is [ #{current_information} ] because it has #{current_probability}."
+        when 0.756112500000000001..0.999999999999999999
+          "Im sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+        else
+          "The probability is either to low or to large, so I cant determine exactly."
+        end
+  
+        current_probability    = current_probability + 0.15
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",       current_information)
+      end
+
+      def self.loss
+        current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+        current_information = File.read("data/statistics/label/current_information.txt")
+
+        if current_probability > 0.999999999999999999
+          current_probability = 0.9 / current_probability
+        end
+  
+        case current_probability
+        when 0.003921569000000000..0.287225000000000000
+          "Im confident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.287225000000000001..0.522225000000000000
+          "Im less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.522225000000000001..0.756112500000000000
+          "Im almost sure it is [ #{current_information} ] because it has #{current_probability}."
+        when 0.756112500000000001..0.999999999999999999
+          "Im sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+        else
+          "The probability is either to low or to large, so I cant determine exactly."
+        end
+  
+        current_probability    = current_probability * 0.95
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",       current_information)
+      end
+
+      def self.dynamic_reward_allocation
+        l1_reasses = "level one reasses"
+        l2_reasses = "level two reasses"
+        l3_reasses = "level tre reasses"
+        l4_reasses = "level fro reasses"
+
+        reward_model = [
+          [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+          [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+          [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+          [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+        ]
+
+        row_options = [0, 1, 2, 3]
+        col_options = [0, 1, 2, 3]
+        arr_options = [0, 1, 2, 3]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+        if    current_reward_structure == l1_reasses;            Obelisk::NeuroSymbolic::BasicML.gain
+        elsif current_reward_structure == l2_reasses; 2.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        elsif current_reward_structure == l3_reasses; 3.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        elsif current_reward_structure == l4_reasses; 4.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        else
+          Obelisk::NeuroSymbolic::BasicML.gain
+        end
+      end
+
+      def self.dynamic_guillotine_allocation
+        l1_reasses = "level one reasses"
+        l2_reasses = "level two reasses"
+        l3_reasses = "level tre reasses"
+        l4_reasses = "level fro reasses"
+
+        reward_model = [
+          [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+          [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+          [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+          [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+        ]
+
+        row_options = [0, 1, 2, 3]
+        col_options = [0, 1, 2, 3]
+        arr_options = [0, 1, 2, 3]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+        if    current_reward_structure == l1_reasses; Obelisk::NeuroSymbolic::BasicML.loss
+        elsif current_reward_structure == l2_reasses; 2.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        elsif current_reward_structure == l3_reasses; 3.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        elsif current_reward_structure == l4_reasses; 4.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        else
+          Obelisk::NeuroSymbolic::BasicML.loss
+        end
+      end
+
+      def self.dynamic_mode_switcher
+        modes = [
+          [["deposit", "deposit"], ["deposit", "extract"]],
+          [["extract", "deposit"], ["extract", "extract"]],
+        ]
+  
+        row_options = [0, 1]
+        col_options = [0, 1]
+        arr_options = [0, 1]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_mode = modes[cur_row][cur_col][cur_arr]
+
+        if    current_mode == "deposit"; Obelisk::NeuroSymbolic::BasicML.dynamic_reward_allocation
+        elsif current_mode == "extract"; Obelisk::NeuroSymbolic::BasicML.dynamic_guillotine_allocation
+        else
+          Obelisk::NeuroSymbolic::BasicML.dynamic_guillotine_allocation
+        end
+      end
+
+      def self.get_edge_cases(a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2)
+        a = [ a1, a2 ]
+        b = [ b1, b2 ]
+        c = [ c1, c2 ]
+        d = [ d1, d2 ]
+        e = [ e1, e2 ]
+        f = [ f1, f2 ]
+
+        edges_cases = [
+          [ a[0], e[0], b[0], d[0], f[0], c[0] ],
+          [ e[0], b[0], d[0], f[0], c[0], a[0] ],
+          [ b[0], d[0], f[0], c[0], a[0], e[0] ],
+          [ d[0], f[0], c[0], a[0], e[0], b[0] ],
+          [ f[0], c[0], a[0], b[0], d[0], e[0] ],
+          [ c[0], a[0], e[0], b[0], d[0], f[0] ],
+        ], [
+          [ a[1], e[1], b[1], d[1], f[1], c[1] ],
+          [ e[1], b[1], d[1], f[1], c[1], a[1] ],
+          [ b[1], d[1], f[1], c[1], a[1], e[1] ],
+          [ d[1], f[1], c[1], a[1], e[1], b[1] ],
+          [ f[1], c[1], a[1], b[1], d[1], e[1] ],
+          [ c[1], a[1], e[1], b[1], d[1], f[1] ],
+        ]
+  
+        symbols      = edges_cases[0]
+        descriptions = edges_cases[1]
+
+        row_options = [0, 1, 2, 3, 4, 5]
+        col_options = [0, 1, 2, 3, 4, 5]
+  
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+  
+        first_symbol      = symbols[cur_row][cur_col] #[cur_arr]
+        first_description = descriptions[cur_row][cur_col] #[cur_arr]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+  
+        second_symbol      = symbols[cur_row][cur_col] #[cur_arr]
+        second_description = descriptions[cur_row][cur_col] #[cur_arr]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+  
+        third_symbol      = symbols[cur_row][cur_col] #[cur_arr]
+        third_description = descriptions[cur_row][cur_col] #[cur_arr]
+  
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(first_symbol,  first_description,
+                                                         second_symbol, second_description,
+                                                         third_symbol,  third_description)
+                   
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+        end
+      end
+
+      def self.hyper_statistics(a1, a2, b1, b2, c1, c2)
+        a = [ a1, a2 ]
+        b = [ b1, b2 ]
+        c = [ c1, c2 ]
+  
+        d = convert_to_piano_to_percent(generate_bounded_probability)
+
+        matrix = [
+          [[[a[0], c[0]],
+            [a[0], a[0]],
+            [a[0], a[0]]],
+     
+           [[a[0], b[0]],
+            [a[0], a[0]],
+            [b[0], a[0]]],
+
+           [[a[0], a[0]],
+            [a[0], a[0]],
+            [c[0], a[0]]]],
+
+          [[[b[0], c[0]],
+            [b[0], b[0]],
+            [a[0], b[0]]],
+    
+           [[b[0], b[0]],
+            [b[0], b[0]],
+            [b[0], b[0]]],
+    
+           [[b[0], a[0]],
+            [b[0], b[0]],
+            [c[0], b[0]]]],
+
+          [[[c[0], c[0]],
+            [c[0], c[0]],
+            [a[0], c[0]]],
+    
+           [[c[0], b[0]],
+            [c[0], c[0]],
+            [b[0], c[0]]],
+    
+           [[c[0], a[0]],
+            [c[0], c[0]],
+            [c[0], c[0]]]],
+        ], [
+          [[[a[1], c[1]],
+            [a[1], a[1]],
+            [a[1], a[1]]],
+     
+           [[a[1], b[1]],
+            [a[1], a[1]],
+            [b[1], a[1]]],
+     
+           [[a[1], a[1]],
+            [a[1], a[1]],
+            [c[1], a[1]]]],
+     
+          [[[b[1], c[1]],
+            [b[1], b[1]],
+            [a[1], b[1]]],
+    
+           [[b[1], b[1]],
+            [b[1], b[1]],
+            [b[1], b[1]]],
+    
+           [[b[1], a[1]],
+            [b[1], b[1]],
+            [c[1], b[1]]]],
+
+          [[[c[1], c[1]],
+            [c[1], c[1]],
+            [a[1], c[1]]],
+    
+           [[c[1], b[1]],
+            [c[1], c[1]],
+            [b[1], c[1]]],
+    
+           [[c[1], a[1]],
+            [c[1], c[1]],
+            [c[1], c[1]]]],
+        ]
+  
+        symbols               = matrix[0]
+        descriptions          = matrix[1]
+
+        mrow = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        mcol = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        marr = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        msub =     [ -1, -2 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1, 2]
+        sub_options = [0, 1]
+
+        cur_row = row_options[mrow]
+        cur_col = col_options[mcol]
+        cur_arr = arr_options[msub]
+        cur_sub = sub_options[msub]
+  
+        current_probability = 0.33 * 0.33 * 0.33 * 0.25
+        current_label       = symbols[cur_row][cur_col][cur_arr][cur_sub]
+        current_description = descriptions[cur_row][cur_col][cur_arr][cur_sub]
+        current_information = %Q("#{current_label}", "#{current_description}")
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",            current_information)
+        File.write("data/statistics/description/current_description.txt",      current_description)
+        File.write("data/statistics/symbol/current_label.txt",                 current_label)
+      end
+
+      def self.hyper_statistics(a1, a2, b1, b2, c1, c2)
+        a = [ a1, a2 ]
+        b = [ b1, b2 ]
+        c = [ c1, c2 ]
+  
+        d = convert_to_piano_to_percent(generate_bounded_probability)
+
+        matrix = [
+          [[[a[0], c[0]],
+            [a[0], a[0]],
+            [a[0], a[0]]],
+     
+           [[a[0], b[0]],
+            [a[0], a[0]],
+            [b[0], a[0]]],
+
+           [[a[0], a[0]],
+            [a[0], a[0]],
+            [c[0], a[0]]]],
+
+          [[[b[0], c[0]],
+            [b[0], b[0]],
+            [a[0], b[0]]],
+    
+           [[b[0], b[0]],
+            [b[0], b[0]],
+            [b[0], b[0]]],
+    
+           [[b[0], a[0]],
+            [b[0], b[0]],
+            [c[0], b[0]]]],
+
+          [[[c[0], c[0]],
+            [c[0], c[0]],
+            [a[0], c[0]]],
+    
+           [[c[0], b[0]],
+            [c[0], c[0]],
+            [b[0], c[0]]],
+    
+           [[c[0], a[0]],
+            [c[0], c[0]],
+            [c[0], c[0]]]],
+        ], [
+          [[[a[1], c[1]],
+            [a[1], a[1]],
+            [a[1], a[1]]],
+     
+           [[a[1], b[1]],
+            [a[1], a[1]],
+            [b[1], a[1]]],
+     
+           [[a[1], a[1]],
+            [a[1], a[1]],
+            [c[1], a[1]]]],
+     
+          [[[b[1], c[1]],
+            [b[1], b[1]],
+            [a[1], b[1]]],
+    
+           [[b[1], b[1]],
+            [b[1], b[1]],
+            [b[1], b[1]]],
+    
+           [[b[1], a[1]],
+            [b[1], b[1]],
+            [c[1], b[1]]]],
+
+          [[[c[1], c[1]],
+            [c[1], c[1]],
+            [a[1], c[1]]],
+    
+           [[c[1], b[1]],
+            [c[1], c[1]],
+            [b[1], c[1]]],
+    
+           [[c[1], a[1]],
+            [c[1], c[1]],
+            [c[1], c[1]]]],
+        ]
+  
+        symbols               = matrix[0]
+        descriptions          = matrix[1]
+
+        mrow = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        mcol = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        marr = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        msub =     [ -1, -2 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1, 2]
+        sub_options = [0, 1]
+
+        cur_row = row_options[mrow]
+        cur_col = col_options[mcol]
+        cur_arr = arr_options[msub]
+        cur_sub = sub_options[msub]
+  
+        current_probability = -0.33 * -0.33 * -0.33 * -0.25
+        current_label       = symbols[cur_row][cur_col][cur_arr][cur_sub]
+        current_description = descriptions[cur_row][cur_col][cur_arr][cur_sub]
+        current_information = %Q("#{current_label}", "#{current_description}")
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",            current_information)
+        File.write("data/statistics/description/current_description.txt",      current_description)
+        File.write("data/statistics/symbol/current_label.txt",                 current_label)
+      end
+    end
+  end
+end
+
+module GameplayElements
+  module Awasunu
+    class ModesOfThought
+      #################################################################################
+      #                           Counterfactual Prediction                           #
+      #################################################################################
+      def probability(prob)
+        rand(prob)
+      end
+
+      def counterfact_selection(*args)
+        a1, a2, b1, b2, c1, c2 = args
+
+        a = a1, a2
+        b = b1, b2
+        c = c1, c2
+
+        counter_factuals = [
+          [[a[0], a[0], a[0]],
+           [a[0], a[0], b[0]],
+           [a[0], a[0], c[0]]],
+
+          [[b[0], b[0], a[0]],
+           [b[0], b[0], b[0]],
+           [b[0], b[0], c[0]]],
+
+          [[c[0], c[0], a[0]],
+           [c[0], c[0], b[0]],
+           [c[0], c[0], c[0]]],
+        ], [
+          [[a[1], a[1], a[1]],
+           [a[1], a[1], b[1]],
+           [a[1], a[1], c[1]]],
+
+          [[b[1], b[1], a[1]],
+           [b[1], b[1], b[1]],
+           [b[1], b[1], c[1]]],
+
+          [[c[1], c[1], a[1]],
+           [c[1], c[1], b[1]],
+           [c[1], c[1], c[1]]],
+        ]
+
+        cf_symbol      = counter_factuals[0]
+        cf_description = counter_factuals[1]
+
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1, 2]
+
+        ## Preselectors
+        nrow_options = [-1, -2, -3]
+        ncol_options = [-1, -2, -3]
+        narr_options = [-1, -2, -3]
+
+        nrow = nrow_options.sample
+        ncol = ncol_options.sample
+        narr = narr_options.sample
+
+        cur_row = row_options[nrow]
+        cur_col = col_options[ncol]
+        cur_arr = arr_options[narr]
+
+        predict_symbol      = cf_symbol[cur_row][cur_col][cur_arr]
+        predict_description = cf_description[cur_row][cur_col][cur_arr]
+        predict_score       = probability(0.99)
+
+        # Predict counterfactual symbol
+        File.write("data/statistics/symbol/current_label.txt",                 predict_symbol)
+
+        # Predict counterfactual score
+        File.write("data/statistics/probability/current_probability.txt", predict_score)
+
+        # Assign information as counterfactual label
+        File.write("data/statistics/label/current_information.txt",            current_information)
+
+        # Create counterfactual description
+        File.write("data/statistics/description/current_description.txt",      predict_description)
+
+        [predict_symbol, predict_description, predict_score]
+      end
+
+      def self.gain
+        current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+        current_information = File.read("data/statistics/label/current_information.txt")
+
+        if current_probability > 0.999999999999999999
+          current_probability = 0.9 / current_probability
+        end
+  
+        case current_probability
+        when 0.003921569000000000..0.287225000000000000
+          "I'm confident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.287225000000000001..0.522225000000000000
+          "I'm less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.522225000000000001..0.756112500000000000
+          "I'm almost sure it is [ #{current_information} ] because it has #{current_probability}."
+        when 0.756112500000000001..0.999999999999999999
+          "I'm sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+        else
+          "The probability is either to low or to large, so I cant determine exactly."
+        end
+  
+        current_probability    = current_probability + 0.15
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",       current_information)
+      end
+
+      def self.loss
+        current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+        current_information = File.read("data/statistics/label/current_information.txt")
+
+        if current_probability > 0.999999999999999999
+          current_probability = 0.9 / current_probability
+        end
+  
+        case current_probability
+        when 0.003921569000000000..0.287225000000000000
+          "I'm confident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.287225000000000001..0.522225000000000000
+          "I'm less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+        when 0.522225000000000001..0.756112500000000000
+          "I'm almost sure it is [ #{current_information} ] because it has #{current_probability}."
+        when 0.756112500000000001..0.999999999999999999
+          "I'm sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+        else
+          "The probability is either to low or to large, so I cant determine exactly."
+        end
+  
+        current_probability    = current_probability * 0.95
+  
+        File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+        File.write("data/statistics/label/current_information.txt",       current_information)
+      end
+
+      def self.dynamic_reward_allocation
+        l1_reasses = "level one reasses"
+        l2_reasses = "level two reasses"
+        l3_reasses = "level tre reasses"
+        l4_reasses = "level fro reasses"
+
+        reward_model = [
+          [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+          [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+          [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+          [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+        ]
+
+        row_options = [0, 1, 2, 3]
+        col_options = [0, 1, 2, 3]
+        arr_options = [0, 1, 2, 3]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+        if    current_reward_structure == l1_reasses;            Obelisk::NeuroSymbolic::BasicML.gain
+        elsif current_reward_structure == l2_reasses; 2.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        elsif current_reward_structure == l3_reasses; 3.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        elsif current_reward_structure == l4_reasses; 4.times do Obelisk::NeuroSymbolic::BasicML.gain end
+        else
+          Obelisk::NeuroSymbolic::BasicML.gain
+        end
+      end
+
+      def self.dynamic_guillotine_allocation
+        l1_reasses = "level one reasses"
+        l2_reasses = "level two reasses"
+        l3_reasses = "level tre reasses"
+        l4_reasses = "level fro reasses"
+
+        reward_model = [
+          [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+           [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+          [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+           [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+          [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+           [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+          [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+           [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+        ]
+
+        row_options = [0, 1, 2, 3]
+        col_options = [0, 1, 2, 3]
+        arr_options = [0, 1, 2, 3]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+        if    current_reward_structure == l1_reasses; Obelisk::NeuroSymbolic::BasicML.loss
+        elsif current_reward_structure == l2_reasses; 2.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        elsif current_reward_structure == l3_reasses; 3.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        elsif current_reward_structure == l4_reasses; 4.times do Obelisk::NeuroSymbolic::BasicML.loss end
+        else
+          Obelisk::NeuroSymbolic::BasicML.loss
+        end
+      end
+
+      def self.dynamic_mode_switcher
+        modes = [
+          [["deposit", "deposit"], ["deposit", "extract"]],
+          [["extract", "deposit"], ["extract", "extract"]],
+        ]
+  
+        row_options = [0, 1]
+        col_options = [0, 1]
+        arr_options = [0, 1]
+
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+
+        current_mode = modes[cur_row][cur_col][cur_arr]
+
+        if    current_mode == "deposit"; Obelisk::NeuroSymbolic::BasicML.dynamic_reward_allocation
+        elsif current_mode == "extract"; Obelisk::NeuroSymbolic::BasicML.dynamic_guillotine_allocation
+        else
+          Obelisk::NeuroSymbolic::BasicML.dynamic_guillotine_allocation
+        end
+      end
+    end
+
+    class BasicDSL
+      def self.viola
+        system("clear")
+      end
+
+      def self.ast(label, value)
+        [ label, value ]
+      end
+
+      def self.atom(value)
+        GameplayElements::Awasunu::BasicDSL.ast(value, "#{value}")
+      end
+
+      def self.encrire(input)
+        puts input
+      end
+
+      def self.encrireln(input)
+        print input
+      end
+
+      ## Name of interactive terminal.
+      def self.documentation(title, description)
+        GameplayElements::Awasunu::BasicDSL.encrireln("#{title} #{description}")
+      end
+
+      def self.sangehommage(prompt)
+        print "#{prompt} "; action = gets.chomp # gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+
+      def self.objet(mot_genre, mot_specifique)
+        "#{mot_genre} #{mot_specifique} "
+      end
+
+      def self.subjet(pronoun)
+        "#{pronoun} "
+      end
+
+      def self.verb(action)
+        "#{action}."
+      end
+
+      def self.osv(o, s, v)
+        "#{o} #{s} #{v}"
+      end
+
+      def self.sov(s, o, v)
+        "#{s} #{o} #{v}"
+      end
+
+      def self.expression(phrase_one, phrase_two)
+        GameplayElements::Awasunu::BasicDSL.encrireln(%Q(["#{phrase_one}", "#{phrase_two}"]\n))
+      end
+
+      def self.parle_grammaire(v, o, s)
+        GameplayElements::Awasunu::BasicDSL.encrireln(%Q(["#{v}", "#{o}", "#{s}"]))
+      end
+
+      def self.nihongotupelo(v, o, s)
+        GameplayElements::Awasunu::BasicDSL.encrireln(%Q(["#{v}", "#{o}", "#{s}"]))
+      end
+
+      ## Grammar
+      def self.ne(first_noun, second_noun)
+        GameplayElements::Awasunu::BasicDSL.encrire("Ne #{first_noun} ou #{second_noun}, ")
+      end
+
+      def self.mais(third_noun)
+        GameplayElements::Awasunu::BasicDSL.encrireln("mais cest #{third_noun}. ")
+      end
+
+      def self.cette(noun, adjective)
+        GameplayElements::Awasunu::BasicDSL.encrireln("Cette #{noun} est #{adjective}.")
+      end
+
+      def self.maisette(noun, adjective)
+        GameplayElements::Awasunu::BasicDSL.encrireln("Maisette #{noun} est #{adjective}.")
+      end
+
+      def self.sinon(noun, adj1, adj2, adj3)
+        GameplayElements::Awasunu::BasicDSL.encrireln("Sinon #{noun} nest #{adj1} ou #{adj2}, mais cest #{adj3}.")
+      end
+
+      def self.parle(character_name, phrase)
+        a = character_name
+        b = phrase
+
+        GameplayElements::Awasunu::BasicDSL.encrire(a)
+        GameplayElements::Awasunu::BasicDSL.encrire(" ")
+        GameplayElements::Awasunu::BasicDSL.encrireln(b)
+
+        [a, b]
+      end
+
+      def bokette(phrase)
+        sleep(1.5)
+  
+        GameplayElements::Awasunu::BasicDSL.encrireln(phrase)
+      end
+
+      def self.ouvert(a, b, c, d, e, g)
+        File.open(a, "a") { |f|
+          f.puts b
+        }
+
+        File.open(c, "a") { |f|
+          f.puts d
+        }
+
+        File.open(e, "a") { |f|
+          f.puts g
+        }
+      end
+    end
+
+    class ExtendedFeatures
+      def self.queue(*args)
+        size_limit = args.size.to_i
+        index = 0
+  
+        reversed_list = args.reverse #.last
+
+        size_limit.times do
+          new_line = reversed_list[index]
+
+          if new_line == reversed_list.last
+            return new_line
+          else
+            print "Index [#{index}]: "
+            puts new_line
+
+            index = index + 1
+          end
+        end
+      end
+
+      def self.matrice(*args)
+        a, b, c = args
+
+        my_list = [
+          [[a, a, a],
+           [a, a, b],
+           [a, a, c]],
+
+          [[b, b, a],
+           [b, b, b],
+           [b, b, c]],
+
+          [[c, c, a],
+           [c, c, b],
+           [c, c, c]],
+        ]
+
+        mrow = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        mcol = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+        marr = [ -1, -2, -3 ].sample #[cur_row][cur_col][cur_arr][cur_sub] # for Int32
+
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1, 2]
+
+        cur_row = row_options[mrow]
+        cur_col = col_options[mcol]
+        cur_arr = arr_options[marr]
+
+        current_result = my_list[cur_row][cur_col][cur_arr]
+
+        puts current_result
+      end
+
+      def vexpress(*args)
+        array_name, v1, o1, s1, s2, o2, v2 = args
+  
+        File.open("#{array_name}.rb", "w") { |f|
+          f.puts <<-EXPRESSION
+          require "./src/Lhacurimosa"
+
+          #{array_name} = ["#{v1}", "#{o1}", "#{s1}", "#{s2}", "#{o2}", "#{v2}"]
+          EXPRESSION
+    
+          f.puts "new_index = ARGV[0].to_i"
+          f.puts "#{array_name}[new_index])"
+        }
+      end
+    end
+  end
+
+  module InputMechanics
+    class Sangehommage
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module NarrativeMechanics
+    class NonLisp
+      #######################################################################################
+      #                                      Awasunu                                        #
+      #######################################################################################
+      # This handles basic string generation for the scripting language.                    #
+      #######################################################################################      
+      def self.encrire(input)
+        print input
+      end
+
+      def self.encrireln(input)
+        puts input
+      end
+
+      ## Name of interactive terminal.
+      def self.documentation(title, description)
+        "#{title} #{description}"
+      end
+
+      def self.objet(mot_genre, mot_specifique)
+        "#{mot_genre} #{mot_specifique}"
+      end
+
+      def self.subjet(pronoun)
+        "#{pronoun}"
+      end
+
+      def self.osv(o, s, v)
+        "#{o} #{s} #{v}"
+      end
+
+      def self.sov(s, o, v)
+        "#{s} #{o} #{v}"
+      end
+
+      def self.vos(v, o, s)
+        "#{v} #{o} #{s}"
+      end
+
+      def self.wodesa(*args)
+        o1, s1, v1, s2, o2, v2,
+        v3, o3, s3, s4, o4, v4 = args
+
+        a = osv(o1, s1, v1)
+        b = sov(s2, o2, v2)
+        c = vos(v3, o3, s3)
+        d = sov(s4, o4, v4)
+
+        %Q(#{a}, #{b}. #{c}, #{d})
+      end
+      
+      def self.grammaire_clustre(*args)
+        v1, o1, s1, s2, o2, v2,
+        o3, s3, v3, s4, o4, v4 = args
+
+        a = vos(v1, o1, s1)
+        b = sov(s2, o2, v2)
+        c = osv(o3, s3, v3)
+        d = sov(s4, o4, v4)
+
+        %Q(#{a}, #{b}. #{c}, #{d})
+      end
+
+      def self.expression(phrase_one, phrase_two)
+        %Q(["#{phrase_one}", "#{phrase_two}"]\n)
+      end
+
+      def self.parle_grammaire(v, o, s)
+        %Q(["#{v}", "#{o}","#{s}"])
+      end
+
+      def self.nihongotupelo(v, o, s)
+        %Q(["#{v}", "#{o}","#{s}"])
+      end
+
+      ## Grammar
+      def self.ne(first_noun, second_noun)
+        "Ne #{first_noun} ou #{second_noun}, "
+      end
+
+      def self.mais(third_noun)
+        "mais cest #{third_noun}. "
+      end
+
+      def self.cette(noun, adjective)
+        "Cette #{noun} est #{adjective}."
+      end
+
+      def self.maisette(noun, adjective)
+        "Maisette #{noun} est #{adjective}."
+      end
+
+      def self.sinon(noun, adj1, adj2, adj3)
+        "Sinon #{noun} nest #{adj1} ou #{adj2}, mais cest #{adj3}."
+      end
+
+      def self.bokette(phrase)
+        sleep(1.5)
+  
+        phrase
+      end
+
+      ################################################################################################
+      #                                       Gameplay Elements                                      #
+      ################################################################################################
+      # This DSL gravitates to fairy tale like stories close to places like like dead civilizations  #
+      # near black holes. With the dying remnants of the last surviving romance language related to  #
+      # French and the Japanese language, with "Uncle Jack" a generic term for deceptively cheerful  #
+      # bedtime material.                                                                            #
+      #                                                                                              #
+      # The main characters are often people executed when the story began with everything else      #
+      # leading up to this point, suggesting a deeper connection in being guillotined in places      #
+      # situated close to the epicenter of a black hole.                                             #
+      ################################################################################################
+
+      # Black Hole Expanse
+      def self.ehonerudos(a, b)
+        %Q(Anos ehonerudos #{a} est de #{b}.)
+      end
+
+      # Executioners scaffold
+      def self.esvasvohudos(a, b)
+        %Q(#{a} tombe en anos esvasvohudos a #{b}.)
+      end
+
+      # Oncle Hanzi as a generic label for fairy tales.
+      def self.ojijaku(a, b)
+        %Q(Anos ojijaku #{a} est cette payes de #{b}.)
+      end
+
+      ################################################################################################
+      #                                            Biomes                                            #
+      ################################################################################################
+      # The parallel bootstrapper seemed to suggest that my constructed language naturally           #
+      # gravitates either to Gobi desert like lands, or even snowy permafrost lands.                 #
+      #                                                                                              #
+      # More specifically it be situated in a dry lake bed in a jungle close to a desert similar to  #
+      # the Gobi desert where the sands are  almost black in color.                                  #
+      ################################################################################################
+      ## Common Biomes
+
+      # Gobi desert like landscape.
+      def self.etigerunerudos(a, b)
+        %Q(#{a} est en le paye de anos etigerunerudos en #{b}.)
+      end
+
+      # White lion lands of snow
+      def self.ehinebehanecos(a, b)
+        %Q(#{a} est en le paye de anos ehinebehanecos en #{b}.)
+      end
+
+      # Dry lake bed
+      def self.ehocucehos(a, b)
+        %Q(#{a} est en le paye de anu ehocucehos en #{b}.)
+      end
+
+      # Jungle biome
+      def self.ebaxetos(a, b)
+        %Q(#{a} est en le paye de anos ebaxetos en #{b}.)
+      end
+
+      ## Rare Biomes
+
+      # Apple Tree Forest
+      def self.egirafucerocodihu(a, b)
+        %Q(#{a} est en le paye de anu egirafucerocodihu en #{b}.)
+      end
+
+      # Savannah Biomes.
+      def self.egunogiyotinos(a, b)
+        %Q(#{a} est en le paye de anos egunogiyotinos en #{b}.)
+      end
+
+      ################################################################################################
+      #                                         Peaceful Mobs                                        #
+      ################################################################################################
+      # The most common peaceful mobs are giraffs, elephants, and villagers loosely based on white   #
+      # and black Algerians.                                                                         #
+      ################################################################################################
+      # A is a giraff in B.
+      def self.egirafu(a, b)
+        %Q(#{a} est en un anu egirafu en #{b}.)
+      end
+
+      # A is a elephant in B.
+      def self.ehepehanutu(a, b)
+        %Q(#{a} est en un anu ehepehanutu en #{b}.)
+      end
+
+      # A is a black footed person in B.
+      def self.nerudospeda(a, b)
+        %Q(#{a} est en un anu nerudospeda de #{b}.)
+      end
+
+      # A is a fish in B.
+      def self.perachinu(a, b)
+        %Q(#{a} est en un anu perachinu en #{b}.)
+      end
+
+      # A is a sheep in B.
+      def self.motonos(a, b)
+        %Q(#{a} est en un anos motonos en #{b}.)
+      end
+
+      ################################################################################################
+      #                                        Ambiguous Mobs                                        #
+      ################################################################################################
+      # These mobs are relatively rare in the context of French colonialism historically, and tended #
+      # to happen more in American French colonies like Haiti and Guyanna if someone is mixed.       #
+      # However every now and then you will encounter red headed girls, with paler skin.             #
+      ################################################################################################
+
+      # A is an red head of B.
+      def self.erudutete(a, b)
+        %Q(#{a} est en un ana erudutete de #{b}.)
+      end
+
+      # A is a wolf in B.
+      def self.lupos(a, b)
+        %Q(#{a} est en un anos lupos en #{b}.)
+      end
+
+      # A is an mouse in B.
+      def self.sorisos(a, b)
+        %Q(#{a} est en un anos sorisos en #{b}.)
+      end
+      # A is an chicken in B.
+      def self.poletos(a, b)
+        %Q(#{a} est en un anos poletos en #{b}.)
+      end
+
+      ################################################################################################
+      #                                      Encountered Monsters                                    #
+      ################################################################################################
+
+      # Lion nationality
+      def self.ehine(a, b)
+        %Q(#{a} est un anos ehine pour #{b}.)
+      end
+
+      # Tiger nationality
+      def self.etigeru(a, b)
+        %Q(#{a} est un anos etigeru pour #{b}.)
+      end
+
+      # A is a crocodile in B.
+      def self.ecerocodihu(a, b)
+        %Q(#{a} est en un anu ecerocodihu en #{b}.)
+      end
+
+      # A is a black uniformed bayonette wielder in B.
+      def self.ebaxetonerudos(a, b)
+        %Q(#{a} est en un anos ebaxetonerudos en #{b}.)
+      end
+
+      ## Specific Dungeon Crawling
+
+      # A is a gobelin in B.\
+      def self.gobehinos(a, b)
+        %Q(#{a} est en un anos gobehinos en #{b}.)
+      end
+
+      ################################################################################################
+      #                                          General Outfit                                      #
+      ################################################################################################
+      # The design aesthetic for women in this time period gravitates to giant hairbows ( like the   #
+      # Alsatian ), corsettes, white stockings, and whole foot wooden shoes.                         #
+      #                                                                                              #
+      # In Lhacurimosa its represented as clothes gradually wearing out, not being easily replaced   #
+      # when theyre damaged. Suggested something more suited for dungeon crawling.                   #
+      ################################################################################################
+
+      ## Recursive Garments
+      def self.aruxetos(a, b)
+        %Q(Cette archette #{a} est de #{b}.)
+      end
+
+      def self.hairbow(a, b, hairbow_output)
+        "#{a} is wearing #{b} on her head."
+
+        File.open("#{hairbow_output}.awa", "w") {
+          f.puts "#{a} #{b} #{hairbow_output}"
+        }
+      end
+
+      def self.coresetosunos(a, b)
+        %Q(Cette corsette #{a} est de #{b}.)
+      end
+
+      def self.corset(a, b, corset_output)
+        "#{a} is wearing #{b} on her head."
+
+        File.open("#{corset_output}.awa", "w") {
+          f.puts "#{a} #{b} #{corset_output}"
+        }
+      end     
+
+      def self.jupecabinemotonese(a, b)
+        %Q(Cette jupe de les chiennes #{a} est de #{b}.)
+      end
+
+      def self.cabin_skirt(a, b, skirt_output)
+        "#{a} is wearing #{b} on her bottom."
+
+        File.open("#{skirt_output}.awa", "w") {
+          f.puts "#{a} #{b} #{skirt_output}"
+        }
+      end
+
+      def self.basumoton(a, b)
+        %Q(Anos basumotonos #{a} est de #{b}.)
+      end
+
+      def self.wool_stockings(a, b, stocking_output)
+        "#{a} is wearing #{b} on her feet."
+
+        File.open("#{stocking_output}.awa", "w") {
+          f.puts "#{a} #{b} #{stocking_output}"
+        }
+      end
+
+      def self.basumotonerudos(a, b)
+        %Q(Anos basumotonerudos #{a} est de #{b}.)
+      end
+
+      def black_stockings(a, b, bstocking_output)
+        "#{a} is wearing #{b} on her feet."
+
+        File.open("#{bstocking_output}.awa", "w") {
+          f.puts "#{a} #{b} #{bstocking_output}"
+        }
+      end
+
+      def self.sfabotarokos(a, b)
+        %Q(Anos sfabotarokos de #{a} est de #{b}.)
+      end
+
+      def self.wooden_sabots(a, b, sabot_output)
+        "#{a} is wearing #{b} on her feet."
+
+        File.open("#{sabot_output}.awa", "w") {
+          f.puts "#{a} #{b} #{sabot_output}"
+        }
+      end
+
+      ################################################################################################
+      #                                  Weaponry And Cursed Items                                   #
+      ################################################################################################
+      # This defines the DSL for giving recipients cursed items, such as when they reach specific    #
+      # locations in the Roguelike.                                                                  #
+      #                                                                                              #
+      # Traditionally weapon, lamp, and knob smith were considered unclean professions, usually done #
+      # as a public service when released from colonial prisons. Lamps in particular were the least  #
+      # clean do them being crafted large enough to function as solitary confinement. This meant     #
+      # that being able to control the power of a lamp carried connations that dont typically exist  #
+      # in either Japanese or French culture.                                                        #
+      #                                                                                              #
+      # Do to the types of animals picked for making soap, more generally the connation of being     #
+      # washed with that rather than herbal soap, meant the term soap itself being a perjorative for #
+      # those obsessed more by appearances than being authentic. Thats not to say people didnt       #
+      # clean, but that some soaps were seen as marked with blood.                                   #
+      ################################################################################################
+      # Cursed weapon smith
+      def self.kurosumisu(cursed_weapon, recipient)
+        "#{recipient} avoir un #{cursed_weapon} par anu kurosumisu."
+      end
+
+      # Cursed lamp smith
+      def self.coperasumisu(cursed_lamp, recipient)
+        "#{recipient} avoir un #{cursed_lamp} par anu coperasumisu."
+      end
+
+      # Cursed knob smith
+      def self.burasusumisu(crafted_knob, recipient)
+        "#{recipient} avoir un #{crafted_knob} par anu burasusumisu."
+      end
+
+      ## Soap From Meat, ala "Ivory Soap"
+      def self.vanedesopu(cursed_meat, recipient)
+        "#{recipient} avoir un #{cursed_meat} par anu vanedesopu."
+      end
+
+      ## Soap from Herbs "Herbal Soap"
+      def self.erobalisusopa(cursed_herb, recipient)
+        "#{recipient} avoir un #{cursed_herb} par ana erobalisusopa."
+      end
+
+      ## Soap from books "Whitewashed books"
+      def self.iverisopa(cursed_book, recipient)
+        "#{recipient} avoir un #{cursed_book} par ana iverisopa."
+      end
+
+      ################################################################################################
+      #                                         Dream Logic                                          #
+      ################################################################################################
+      # These are functions specifically in reference to dream patterns Ive had when studying my     #
+      # my own subconscious. A clever analyst will notice that dream symbols also frequently overlap #
+      # with folklore symbols. The difference here is that dream symbols are treated as explicit     #
+      # anomalies in order to assess what the unincorporated shadow is.                              #
+      ################################################################################################
+      def self.argue_purpose(a, b, c)
+        %Q(#{a} has elements of #{b}, but #{c} is primarily composed of #{b}.)
+      end
+
+      def self.basement_ghost(a, b, c)
+        %Q(#{a} checks on noise in #{b}, and invited to dinner by #{c}. Dont eat #{c}s food or youll never leave #{b}.)
+      end
+
+      def self.bedroom_coffee_maker(a, b)
+        %Q(#{a} is a room in the #{b}.)
+      end
+
+      def self.deer_attack(a, b)
+        %Q(Deer #{a} attack specimen #{b} as a unit of multiple deer, before #{b} wakes up.)
+      end
+
+      def self.explore_bedroom(a)
+        %Q(#{a} explores the current bedroom.)
+      end
+
+      def self.goat_ride_salamander(a, b, c, d)
+        %Q(#{a} rides #{b} causing the end of the world, survived by #{c}. #{a} is theorized to eat lifestock, and is unknown whether to target #{d}.)
+      end
+
+      def self.greenhouse_path(a, b)
+        %Q(#{a} is in the greenhouse of #{b}.)
+      end
+
+      def self.innocent_hour(a)
+        %Q(#{a} currently in the hour of innocense, and has tiny horns.)
+      end
+
+      def self.terror_hour(a)
+        %Q(#{a} currently in the hour of terror, and has long horns.)
+      end
+
+      def self.is_haunted(a, b, c)
+        %Q(#{a} thinks #{c} is haunted, but not #{b}.)
+      end
+
+      def self.local_reality_zone(a, b, y1, x1, y2, x2)
+        %Q(#{a} is a local reality zone of #{b}, with #{a} having a local y of #{y1} and x of #{x1}. But #{b} itself only has a y of #{y2} and an x of #{x2}.)
+      end
+
+      def self.specify_reality_zone(a, b, c)
+        %Q(#{a}, therefore {b} giving it the #{c} classification.)
+      end
+
+      def self.non_euclid(a, b)
+        %Q(You can fit #{a} inside of #{b} because its exact dimensions arent defined.)
+      end
+
+      def self.spot_rainbow_elephant(a, b)
+        %Q(#{a} is featured in #{b} is a rainbow elephant.)
+      end
+
+      def self.non_uniform_anomaly(a, b, c, d, e, f)
+        %Q(You can fit #{a} inside of #{b} although top floors y is #{c}, and the top floors x is #{d}. The bottom floor is y of #{e} and x of #{f}.)
+      end
+
+      def self.plant_evidence(a, b, c)
+        %Q(#{a} murders student #{c}, telling #{b} they framed them for their murder.)
+      end
+
+      def self.plant_tree(a, b)
+        %Q(Tree #{a} is planted on plot in #{b}.)
+      end
+
+      def self.poupee_sassoir(a)
+        %Q(Je avoir sassoir en le chaise a #{a}.)
+      end
+
+      def self.nepoupee_sassoir(a)
+        %Q(Je ne avoir sassoir en le chaise a #{a}.)
+      end
+
+      def self.ravenauka(a, b)
+        %Q(#{a} is chased off to the nevermore of #{b} by a demonic raven.)
+      end
+
+      def self.sabofensu(a)
+        %Q(Moi ne avoir un avis de: #{a})
+      end
+
+      def self.squirrel_dog_beetle(a)
+        %Q(#{a} whom looks like a mix of a squirrel, mangi dog, and beetle.)
+      end
+
+      def self.talk_to_tree(a, b)
+        %Q(#{a} chats with tree #{b} about its day.)
+      end
+
+      def self.tree_yard(a, b, c)
+        %Q(#{a} #{b} #{c})
+      end
+
+      def self.try_on_shoes(a, b)
+        %Q(#{a} tries on shoes #{b}.)
+      end
+
+      def self.twirl_baton(a, b)
+        %Q(#{a} twirls #{b} like a baton.)
+      end
+
+      def self.wander_halls(a, b, c)
+        %Q(#{a} wanders from #{b} to #{c}.)
+      end
+
+      # That impression of #{a} that has wapred into a black expanse.
+      def self.ninoremodei(a)
+        "Cette #{a} est anos ninoermodeios."
+      end
+
+      # forme de gravite
+      def self.graviteformee(a, b)
+        "Le #{a} es uni avec #{b}: #{a}#{b}"
+      end
+
+      def self.negraviteformee(a, b)
+        "Le #{a} es ne uni avec #{b}: #{a}#{b}"
+      end
+
+      ## Turns off the television
+      def self.incongruisho(a, b, c)
+        "The #{a} must be taken from #{b} and disposed of at #{c} and forgotten about."
+      end
+
+      def self.neincongruisho(a, b, c)
+        "The impact of #{a} from the pattern of #{b} in the context of #{c}."
+      end
+
+      def self.ghost_upstairs(a, b)
+        ghost_states = [
+          [[false, false], [false, true]],
+          [[true,  false], [true,  true]],
+        ]
+
+        row_options = [0, 1]
+        col_options = [0, 1]
+        arr_options = [0, 1]
+  
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+  
+        current_ghost = ghost_states[cur_row][cur_col][cur_arr]
+  
+        %Q(#{a} is the middle management of #{b}, that has two floors above #{b}, one below the surface floor: #{current_ghost})
+      end
+
+      ############################################################################################################
+      #                                            Maisettemurale                                                #
+      ############################################################################################################
+      # These commands are for analyzing murals on walls in different parts of the game world.                   #
+      ############################################################################################################
+      # Analyze painting or mural
+      def self.muralebunseki(a, b)
+        "Vous avoir analyse #{a} en repos en #{b}."
+      end
+
+      # Painter Salutations
+      # Salut and Gaka, or salute the painter, or specifically their painting.
+      def self.salugaka(a, b)
+        "Vous avoir salute #{a} en photo de #{b}."
+      end
+
+      ### House Type Validation
+      #def self.quoi_est_le_poupee(cette, maisette, sinon) # Quposa
+      #  c = cette("poupee", "victorienne")
+      #  d = maisette("poupee", "barbie")
+      #  e = sinon("poupee", "victorienne", "barbie", "blyth")
+
+      #  "Est le poupee avoir un seance en house victorienne? #{c} #{d} #{e}"
+      #end
+
+      ## Haunted Doll Name Validation
+      def self.est_nom_fausse(a, b, c, d) # esenomefasamu
+        nom_de_plumes = [
+          [[a, a, a], [a, a, b], [a, a, c]],
+          [[b, b, s], [b, b, b], [b, b, c]],
+          [[c, c, a], [c, c, b], [c, c, c]],
+        ]
+  
+        row_options = [0, 1, 2]
+        col_options = [0, 1, 2]
+        arr_options = [0, 1, 2]
+  
+        cur_row = row_options.sample
+        cur_col = col_options.sample
+        cur_arr = arr_options.sample
+  
+        new_name = nom_de_plumes[cur_row][cur_col][cur_arr]
+
+        if new_name == d
+          "Checking if that Dollys name might be fake: #{ner_name}. All thing accorded..."   
+        else
+          "Checking if that Dollys name might be fake: #{ner_name}. This name seems to be not legitimate."
+        end
+      end
+
+      ################################################################################################
+      #                                Who What When Where Why How                                   #
+      ################################################################################################
+      #
+      ################################################################################################
+      def self.nom(a)
+        "Mes nom est #{a}."
+      end
+
+      def self.buttai(b)
+        "Cest un/une #{b}."
+      end
+
+      def self.temps(c)
+        "Le temp est #{c}."
+      end
+
+      def self.fukin(d)
+        "Je suis en le voisinage de #{d}."
+      end
+
+      def self.motif(e)
+        "Mes raison pour ce est #{e}."
+      end
+
+      def self.hono(f)
+        "Mois methode pour le fabrication mes objectifs est #{f}."
+      end
+
+      def self.jiko(a, b, c)
+        "Vous avoir damande moi #{a} a propos #{b} par #{c}."
+      end
+
+      ## Unite specific people at a time and place
+      def self.unir(a, b, c)
+        "Je avoir unif avec #{a} avec #{b} a #{c}."
+      end
+
+      def self.genkei(a)
+        "Je suis un etudiant a propos #{a}."
+      end
+
+      def self.musee_comprime(a)
+        "cette musee comprime #{a}."
+      end
+
+      def self.noremodei(a)
+        "Cette #{a} est noermodeios."
+      end
+
+      def self.ninom(a)
+        "Mes nom est ne #{a}."
+      end
+
+      def self.nibuttai(b)
+        "Cest non un/une #{b}."
+      end
+
+      def self.netemps(c)
+        "Le temp est ne #{c}."
+      end
+
+      def self.nifukin(d)
+        "Je suis ne en le voisinage de #{d}."
+      end
+
+      def self.nemotif(e)
+        "Mes raison pour ce est ne #{e}."
+      end
+
+      def self.nihono(f)
+        "Mois methode pour le fabrication mes objectifs est ne #{f}."
+      end
+
+      ## Disunification
+      def self.neunir(a, b, c)
+        "Je ne avoir unif avec #{a} avec #{b} a #{c}."
+      end
+
+      def self.nijiko(a, b, c)
+        "Vous ne avoir damande moi #{a} a propos #{b} par #{c}."
+      end
+
+      def self.nigenkei(a)
+        "Je suis ne un etudiant a propos #{a}."
+      end
+
+      #################################################################################################################
+      #                                           Maisette De Relatif                                                 #
+      #################################################################################################################
+      # This section for analyzing the relationship between individuals and their relative assessment how likely they #
+      # are to be estranged from each other, or distance do to some other issue.                                      #
+      #################################################################################################################
+      ## equation de reduction
+      def self.reduce_equation(a, b, c)
+        "The equation of #{a}, can be reduced down to #{b} and #{c}."
+      end
+
+      ## which_stopped_talking / qui_a_surpasse_les_conversations
+      def self.qusurp(a, b)
+        "Do #{a} stop talking before #{b}, or #{b} stop talking before #{a}>"
+      end
+
+      ## which_died_first?
+      def self.qui_est_mort_en_premier(a, b)
+        "Do #{a} die before #{b}, or #{b} before #{a}>"
+      end
+
+      ## which relative?
+      def self.quel_relatif(a)
+        "#{a}"
+      end
+
+      ## is_relative_estranged est relative eloigne
+      def self.est_relative_eloigne(a, b, c)
+        "Is the relative of #{a} estranged from #{b}?: #{c}"
+      end
+
+      ## is_relative_dead?
+      def self.est_relativement_mort(a, b, c)
+        "Did #{a} find out that the relative #{b} has died?: #{c}"
+      end
+
+      ## qui a surpassé les conversations / Who surpassed conversations?
+      def self.qui_a_surpasse_les_conversations(a, b)
+        "Did #{a} stop talking before #{b}, or #{b} stop talking before #{a}?"
+      end
+
+      ## qui est mort en premier
+      def self.qui_est_mort_en_premier(a, b)
+        "Did #{a} die before #{b}, or #{b} before #{a}?"
+      end
+
+      ## quel relatif
+      def self.quel_relatif(a)
+        "#{a}"
+      end
+
+      ## est relative eloigne
+      def self.est_relative_eloigne(a, b, c)
+        "Is the relative of #{a} estranged from #{b}?: #{c}"
+      end
+
+      ## est relativement mort? 
+      def self.est_relativement_mort(a, b, c)
+        "Did #{a} find out that the relative #{b} has died?: #{c}"
+      end
+    end
+  end
+
+  module ParanormalMechanics
+    class Cerberus
+      def self.cpp(fake_percent) # convert_from_piano_to_percent
+        # if number is 0.eaaaaf, convert to real percent
+        real_percent = fake_percent.tr ".cdefgab", ".0123456"
+        real_percent = real_percent.to_f
+  
+        real_percent
+      end
+
+      ## Closer to the original intent, where each head represents unfalsifiable probability.
+      def self.cpo(a, b, c, d) # cerberus_piano
+        first_value  = convert_from_piano_to_percent(a) # a.tr ".cdefgab", ".0123456"  #.to_f
+        second_value = convert_from_piano_to_percent(b) # b.tr ".cdefgab", ".0123456" #.to_f
+        third_value  = convert_from_piano_to_percent(c) # c.tr ".cdefgab", ".0123456"  #.to_f
+  
+        first_value  = ( 1 / first_value ) ** d
+        second_value = ( 1 / second_value ) ** d
+        third_value  = ( 1 / third_value ) ** d
+
+        "#{a}, #{b}, #{c} is processed in parallel."
+
+        [ first_value, second_value, third_value ]
+      end
+
+      ## This handles coverted probabilities.
+      def self.cbs(a, b, c, d) # cerberus
+        first_value  = ( 1 / a ) ** d
+        second_value = ( 1 / b ) ** d
+        third_value  = ( 1 / c ) ** d
+
+        "#{a}, #{b}, #{c} is processed in parallel."
+    
+        [ first_value, second_value, third_value ]
+      end
+    end
+
+    class NarrativeMechanics
+      def self.cbe(a, b, c) # Collaborate
+        "#{a} and #{b} collaborate on #{c}."
+      end
+
+      def self.dty(a, b) # dormatory
+        "#{a} is sleeping in dormatory #{b}"
+      end
+
+      def self.srm(a, b) # shared restroom
+        "#{a} shares a restroom with guest #{b}"
+      end
+
+      def self.das(a, b, c, d, e, f, g, h, i, j) # daily_activities
+        "#{a} #{b} #{c} #{d} #{e} #{f} #{g} #{h} #{i} #{j}"
+      end
+
+      def self.nas(a, b, c, d, e) # nightly_activities
+        "#{a} #{b} #{c} #{d} #{e}"
+      end
+
+      def self.dha(a, b) # differentiate_holopersona
+        "#{a} differentiates holopersona #{b}"
+      end
+
+      def self.dhy(a, b) # discuss_history
+        "#{a} discusses personal history with #{b}."
+      end
+
+      def self.fin(a, b) # false_information
+        "#{a} planted false information in #{b}."
+      end
+
+      def self.fsi(a, b) # false_invoice
+        "#{a} filed a false invoice to #{b}."
+      end
+
+      def self.fdd(a, b) # find_descrepancy
+        "There is a descrepancy between #{a} and #{b}."
+      end
+
+      ## Empty the layers of contradiction
+      def self.flb(a, b) # [ Ku xa mun uh ki xoh ] # find_layers_between
+        "The layers between #{a} and #{b} are empty."
+      end
+
+      def self.lcn(a, b) # layer_contradiction
+        "#{a} is a contradiction of #{b}."
+      end
+
+      def self.mfd(a, b) # meet_friends
+        "#{a} meets a friend over at #{b}."
+      end
+
+      def self.bss(a, b) # is_back_same_size
+        "#{a} is size of #{b} #{affirmation}"
+      end
+
+      def self.owp(a, b, c) # observe_wendigo_poodle
+        "#{a} and b observe the wendigo poodle. It destroys photographs of it when you take them. c is where it concentrates at a specific hour."
+      end
+
+      def self.cdp(a, b) # converted_porch
+        "#{a} and b having become an outside porch."
+      end
+
+      def self.psi(a, b) # persona_select_item
+        "#{a} select item #{b}"
+      end
+    end
+
+    class FrancaisMechanique
+      # Derived from "gladius black", a mythological sword that absorbs all light.
+      def self.gss(a, b) # gehadisoneros
+        "#{a} est le gehadisonaros de #{b}."
+      end
+
+      # The space that which the black gladius once took up.
+      def self.nss(a, b) # negehadisoneros
+        "Le espace de #{a} c'est comme un gehadisonaros de #{b}."
+      end
+
+      ## Sangui De Shiyuzumi -- Cinnabar red sumi ink laced with blood
+      def self.sxs(a, b) # svaneguxixumos
+        "#{a} is laced with the color of blood and #{b}."
+      end
+
+      def self.nxs(a, b) # nesvaneguxixumos
+        "#{a} is laced with the color of blood and #{b}."
+      end
+    end
+  end
+
+  module LinguaDeLesEspionnes
+    class NarrativeComponents
+      def self.cnl(a, b) # contain_leakage
+        "#{a} contains leakage of #{b}."
+      end
+
+      def self.epa(a, b, c) # extract_persona
+        "Extract #{a} from #{b}, as a is aware of c"
+      end
+
+      def self.imn(a, b) # impact_mitigation
+        "The impact or mitigation of contradiction #{a} and #{b} in the void."
+      end
+
+      def self.pcr(a, b) # park_car
+        "#{a} parks the car in #{b}."
+      end
+
+      def self.sfn(a, b) # soda_fountain
+        "#{a} located in #b}"
+      end
+
+      def self.jbn(a, b) # joker_the_babarbian
+        "#{a} is a #{b}"
+      end
+
+      ###############################################################################################################
+      #                                           Hybrid FUnctions                                                  #
+      ###############################################################################################################
+      # cette_incongruisho(cette("pomme", "rouge"), "apple", "the table", "garbage can")
+      def self.cinco(i, a, b, c) # cette_incongruisho
+        "#{i}: The #{a} has been found to have a pattern of #{b} in the context of #{c}."
+      end
+
+      # maisette_incongruisho(maisette("pomme", "rouge"), "apple", "the table", "garbage can")
+      def self.masinco(i, a, b, c) # maisette_incongruisho
+        "#{i}: The #{a} has been found to have a pattern of #{b} in the context of #{c}."
+      end
+
+      # sinon_incongruisho(maisette("pomme", "rouge"), "apple", "the table", "garbage can")
+      def self.sinco(i, a, b, c) # sinon_incongruisho
+        "#{i}: The #{a} has been found to have a pattern of #{b} in the context of #{c}."
+      end
+
+      def self.sabinco(i, a, b, c) # sabofensu_incongruisho
+        "Ive forgotten about the impact: #{a} must be taken from #{b} and disposed of at #{c} and forgotten about."
+      end
+
+      def self.saboninco(i, a, b, c) # sabofensu_neincongruisho
+        "I must recheck the impact: Ive forgotten #{a} must have been taken from #{b} and disposed of at #{c}."
+      end
+
+      def self.saborakinco(i, a, b, c) # saborakku_incongruisho
+        "I must recheck: #{a} must be taken from #{b} and relocated to #{c} for research purposes."
+      end
+
+      def self.saboraninco(i, a, b, c) # saborakku_neincongruisho
+        "I must recheck the impact: #{a} must be taken from #{b} and relocated to #{c} for research purposes."
+      end
+    end
+  end
+end
+
+##############################################################################################
+#                           Masculine Honoric Vehicular Management                           #
+##############################################################################################
+module Samu
+  module Cemotu
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numotu
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module SamuAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SamuDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Hikasu
+  module Cemotu
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numotu
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                        b1, b2,
+                                                        c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class HikasuDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Sanu
+  module Cemotu
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numotu
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                        c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SanuDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Chanu
+  module Cemotu
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numotu
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class ChanuDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+##############################################################################################
+#                               Feminine Vehicular Management                                #
+##############################################################################################
+module Sama
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module SamaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SamaDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Hikasa
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class HikasaDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Sana
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SanaDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Chana
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class ChanaDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+end
+
+##############################################################################################
+#                               Agentic Vehicular Management                                 #
+##############################################################################################
+module Samos
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SamosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Hikasos
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class HikasosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Sanos
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class SamosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Chanos
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class ChanosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Tunos
+  module Cemota
+    class Objet
+      def self.fruit(nom_de_fruit)
+        nom_de_fruit
+      end
+
+      def self.legume(nom_de_legume)
+        nom_de_legume
+      end
+
+      def self.viande(nom_de_viande)
+        nom_de_viande
+      end
+
+      def self.chaussure(nom_de_chaussure)
+        nom_de_chaussure
+      end
+    end
+
+    class Sujet
+      def self.moi(directive)
+        "#{directive} moi."
+      end
+
+      def self.toi(directive)
+        "#{directive} toi."
+      end
+
+      def self.ils(directive)
+        "#{directive} ils."
+      end
+
+      def self.elles(directive)
+        "#{directive} elles."
+      end
+
+      def self.noi(directive)
+        "#{directive} noi."
+      end
+    end
+  end
+
+  module Numota
+    class Phrase
+      def self.express(objet, sujet, verbe)
+        "#{objet.downcase}_#{sujet.downcase}_#{verbe.downcase}"
+      end
+    end
+  end
+
+  module LType
+    class List
+      def self.assert(cemotu, numotu)
+        list_name = [ cemotu, numotu ]
+      end
+    end
+  end
+
+  module GameDevElements
+    class InputMechanics
+      def self.sangehommage(prompt)
+        print "#{prompt} "; read_line = gets.not_nil!.chomp
+      end
+
+      def self.parle_merci(prompt, output)
+        print "#{prompt} "; puts output
+      end
+    end
+  end
+
+  module HikasaAwasunu
+    class Mperiod
+      #######################################################################################
+      #                                    Medusahoseki                                     #
+      #######################################################################################
+      def self.proximity_de_medusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Medusahoseki ( Medusa Gem ): #{calculation}"
+      end
+
+      def self.proximity_de_nemedusahoseki(a, b)
+        maximum_distance     = b
+        distance_probability = 1 - a
+  
+        calculation = maximum_distance - ( maximum_distance * distance_probability )
+        calculation = calculation.round
+  
+        "Distance from Nemedusahoseki ( Salamander Riding Goat ): #{calculation}"
+      end
+
+      def self.proximity_de_memorie(a)
+        year_period = 12
+  
+        calculation = 12 - ( 12 * a )
+        calculation = calculation.round
+  
+        "This memory was from a prior #{calculation} year period"
+      end
+
+      def self.mperiod_sprox(a, b)
+        "#{a} #{b.upcase}"
+      end
+
+      ################################################################################################
+      #                                         Use Case                                             #
+      ################################################################################################
+      # Suppose two people wanted to cover up two dead bodies: one is the dead girlfriend of the     #
+      # main character, the other is the brother whom murdered the girlfriends brother having        #
+      # placing his unconscious body in a rail road, so blood isn't on his hands.                    #
+      #                                                                                              #
+      # This aims to solve how you investigate a case where the reality of one victim is not         #
+      # and one of the victims doesn't actually exist. The other is not murdered directly by the     #
+      # perpetrator.                                                                                 #
+      ################################################################################################
+      def self.first_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+  
+      def self.second_murder(victim_name, victim_method, case_status, victim_real)
+        "#{victim_name}, #{victim_method}, #{case_status}] REALITY: #{victim_real}"
+      end
+	
+      def self.investigate_case(a1, a2, b1, b2, c1, c2)
+        2.times do
+          Obelisk::NeuroSymbolic::BasicML.get_statistics(a1, a2,
+                                                         b1, b2,
+                                                         c1, c2)
+      
+          Obelisk::NeuroSymbolic::BasicML.dynamic_mode_switcher
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_information} #{current_probability}"
+        end
+      end
+
+      ########################################################################################
+      #                         Fueporu Et Perimetre De La Caverne                           #
+      ########################################################################################
+      # Evaluating the descrepancy between the height of the firepole and the height of the  #
+      # building to determine how much of the firepole in fact goes underground, and analyze #
+      # the cavern perimeter.                                                                #
+      ########################################################################################
+      def self.fueporu(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      # fagyka'u grana [ firepole ]
+      def self.fuegrana(location_x, location_y, location_z, height_drop)
+        location_x  = location_x.to_i
+        location_y  = location_y.to_i
+        location_z  = location_z.to_i
+        height_drop = height_drop.to_i
+
+        average_height       = 20
+  
+        if    height_drop > average_height
+          percentage = average_height / height_drop
+  
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Average height is #{percentage} of height drop at #{height_drop} feet.' ],"
+        elsif height_drop < average_height
+          percentage = height_drop / average_height
+
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop is #{percentage} percentage of average height in #{average_height} feet' ],"
+        else
+          "[ :le_feuporu, #{location_x}, #{location_y}, #{location_z}, 'Height Drop and Average Height is of the same height.' ],"
+        end
+      end
+
+      def self.cavern_perimeter(pole_size, building_height)
+        if pole_size > building_height
+          under_layer = building_height - pole_size
+
+          "From the main floor, the fire pole is #{under_layer} feet underground."
+        else
+          "The size of the fire pole fits within the size of the building."
+        end
+      end
+    end
+  end
+
+  module RankDialogue
+    class TunosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+module Kunos
+  # Needs a formal way of Generating data and user strings.
+
+  module RankDialogue
+    class KunosDialogue
+      ## Theoretical, such as if someone became a diety.
+      def self.subterfuge(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.underling(clause_one, clause_two)
+        "#{clause_one}, #{clause_two}."
+      end
+
+      def self.vos(verb, object, subject)
+        "#{verb} #{object} #{subject}"
+      end
+
+      def self.osv(object, subject, verb)
+        "#{object} #{subject} #{verb}"
+      end
+
+      def self.ovs(object, verb, subject)
+        "#{object} #{verb} #{subject}"
+      end
+
+      def self.sov(subject, object, verb)
+        "#{subject} #{object} #{verb}"
+      end
+    end
+  end
+
+  module BodyArmor
+    class Cockpit
+      def self.board_wheelchair(agent_name, robot_color)
+        "#{agent_name} boards the chair of the cockpit that is color #{robot_color}."
+      end
+
+      def self.shoot_guillotine_blade(enemy_name, guilotine_color)
+        "#{enemy_name} is shot with the guillotine blade that is colored #{guilotine_color}."
+      end
+
+      ## Domestic Tasks
+      def self.deliver_coffee(customer)
+        "Coffee is delivered to #{customer}."
+      end
+
+      def self.deliver_package(package_name, customer)
+        "#{package_name} delivered to #{customer}."
+      end
+
+      def self.analyze_coordinates(y, z, agent_name)
+        "Agent name is location on Y #{y} and X #{x}"
+      end
+    end
+
+    class Breaks
+      def self.drink_coffee(agent_name, coffee_variety, flavor_notes)
+        "#{agent_name} drinks coffee from #{coffee_variety}. The flavor is #{flavor_notes}"
+      end
+
+      def self.eat_food(agent_name, food_name)
+        "#{agent_name} eats #{food_name}."
+      end
+
+      def self.try_on_shoes(agent_name, footwear_name, footwear_color)
+        "#{agent_name} window shops for #{footwear_name} of color #{footwear_color}."
+      end
+    end
+  end
+
+  module Region
+    class UndergroundCity
+      def self.battle(insurgent_name)
+        puts "Le homme / femme #{insurgent_name} est en le batailles."
+      end
+    end
+
+    class Prison
+      def self.guillotine(executee)
+        puts "Le homme / femme #{executee} avoir ne tete pour le guillotine."
+      end
+    end
+  end
+end
+
+#################################################################################
+#                                Predict Tethering                              #
+#################################################################################
+def gallows(*args)
+  scaffold_height, scaffold_width, scaffold_depth,
+  rope_length,     rope_width,     rope_tensil     = args
+
+  def scaffold_metrics(sh, sw, sd)
+    [[[sh, sh, sh], [sh, sh, sw], [sh, sh, sd]],
+     [[sw, sw, sh], [sw, sw, sw], [sw, sw, sd]],
+     [[sd, sd, sh], [sd, sd, sw], [sd, sd, sd]]]
+  end
+
+  def rope_metrics(rl, rw, rt)
+    [[[rl, rl, rl], [rl, rl, rw], [rl, rl, rt]],
+     [[rw, rw, rl], [rw, rw, rw], [rw, rw, rt]],
+     [[rd, rd, rl], [rd, rd, rw], [rd, rd, rt]]]
+  end
+
+  ## Checks if scaffold inputs are valid.
+  if scaffold_height.nil?
+    puts "Error: There is no scaffold height information."
+
+    abort
+  end
+
+  if scaffold_width.nil?
+    puts "Error: There is no scaffold weight information."
+
+    abort
+  end
+
+  if scaffold_depth.nil?
+    puts "Error: There is no scaffold depth information."
+
+    abort
+  end
+
+  ## Checks if rope inputs are valid.
+  if rope_length.nil?
+    puts "Error: There is no rope length information."
+
+    abort
+  end
+
+  if rope_width.nil?
+    puts "Error: There is no rope width information."
+
+    abort
+  end
+
+  if rope_tensil.nil?
+    puts "Error: There is no rope tensil strength information."
+
+    abort
+  end
+
+  scaffold_trivia = scaffold_metrics(scaffold_height, scaffold_width, scaffold_depth)
+  rope_trivia     = rope_metrics(rope_length, rope_width, rope_tensil)
+
+  row_options = [0, 1, 2]
+  col_options = [0, 1, 2]
+  arr_options = [0, 1, 2]
+
+  ## Preselectors
+  nrow_options = [-1, -2, -3]
+  ncol_options = [-1, -2, -3]
+  narr_options = [-1, -2, -3]
+
+  nrow = nrow_options.sample
+  ncol = ncol_options.sample
+  narr = narr_options.sample
+
+  cur_row = row_options[nrow]
+  cur_col = col_options[ncol]
+  cur_arr = arr_options[narr]
+
+  current_scaffolding = scaffold_trivia[cur_row][cur_col][cur_arr]
+  current_tether      = rope_trivia[cur_row][cur_col][cur_arr]
+
+  [current_scaffolding, current_tether]
+end
+
+#################################################################################
+#                             Predict Disconnection                             #
+#################################################################################
+def guillotine(*args)
+  scaffold_height,     scaffold_width, scaffold_depth,
+  guillotine_height, guillotine_depth, blade_sharpness = args
+
+  def scaffold_metrics(sh, sw, sd)
+    [[[sh, sh, sh], [sh, sh, sw], [sh, sh, sd]],
+     [[sw, sw, sh], [sw, sw, sw], [sw, sw, sd]],
+     [[sd, sd, sh], [sd, sd, sw], [sd, sd, sd]]]
+  end
+
+  def gprowess(gh, gd, gs)
+    [[[gh, gh, gh], [gh, gh, gd], [gh, gh, gs]],
+     [[gw, gw, gh], [gw, gw, gd], [gw, gw, gs]],
+     [[gs, gs, gh], [gs, gs, gd], [gs, gs, gs]]]
+  end
+
+  ## Checks if scaffold inputs are valid.
+  if scaffold_height.nil?
+    puts "Error: There is no scaffold height information."
+
+    abort
+  end
+
+  if scaffold_width.nil?
+    puts "Error: There is no scaffold weight information."
+
+    abort
+  end
+
+  if scaffold_depth.nil?
+    puts "Error: There is no scaffold depth information."
+
+    abort
+  end
+
+  ## Checks if rope inputs are valid.
+  if guillotine_height.nil?
+    puts "Error: There is no guillotine height information."
+
+    abort
+  end
+
+  if guillotine_depth.nil?
+    puts "Error: There is no guillotine depth information."
+
+    abort
+  end
+
+  if blade_sharpness.nil?
+    puts "Error: There is no guillotine blade sharpness information."
+
+    abort
+  end
+
+  scaffold_trivia   = scaffold_metrics(scaffold_height, scaffold_width, scaffold_depth)
+  guillotine_trivia = gprowess(guillotine_height, guillotine_depth, blade_sharpness)
+
+  row_options = [0, 1, 2]
+  col_options = [0, 1, 2]
+  arr_options = [0, 1, 2]
+
+  ## Preselectors
+  nrow_options = [-1, -2, -3]
+  ncol_options = [-1, -2, -3]
+  narr_options = [-1, -2, -3]
+
+  nrow = nrow_options.sample
+  ncol = ncol_options.sample
+  narr = narr_options.sample
+
+  cur_row = row_options[nrow]
+  cur_col = col_options[ncol]
+  cur_arr = arr_options[narr]
+
+  current_scaffolding   = scaffold_trivia[cur_row][cur_col][cur_arr]
+  current_disconnection = rope_trivia[cur_row][cur_col][cur_arr]
+
+  [current_scaffolding, current_disconnection]
+end
+
+#################################################################################
+#                           Counterfactual Prediction                           #
+#################################################################################
+def probability(prob)
+  rand(prob)
+end
+
+def counterfact_selection(*args)
+  a1, a2, b1, b2, c1, c2 = args
+
+  a = a1, a2
+  b = b1, b2
+  c = c1, c2
+
+  counter_factuals = [
+    [[a[0], a[0], a[0]],
+     [a[0], a[0], b[0]],
+     [a[0], a[0], c[0]]],
+
+    [[b[0], b[0], a[0]],
+     [b[0], b[0], b[0]],
+     [b[0], b[0], c[0]]],
+
+    [[c[0], c[0], a[0]],
+     [c[0], c[0], b[0]],
+     [c[0], c[0], c[0]]],
+  ], [
+    [[a[1], a[1], a[1]],
+     [a[1], a[1], b[1]],
+     [a[1], a[1], c[1]]],
+
+    [[b[1], b[1], a[1]],
+     [b[1], b[1], b[1]],
+     [b[1], b[1], c[1]]],
+
+    [[c[1], c[1], a[1]],
+     [c[1], c[1], b[1]],
+     [c[1], c[1], c[1]]],
+  ]
+
+  cf_symbol      = counter_factuals[0]
+  cf_description = counter_factuals[1]
+
+  row_options = [0, 1, 2]
+  col_options = [0, 1, 2]
+  arr_options = [0, 1, 2]
+
+  ## Preselectors
+  nrow_options = [-1, -2, -3]
+  ncol_options = [-1, -2, -3]
+  narr_options = [-1, -2, -3]
+
+  nrow = nrow_options.sample
+  ncol = ncol_options.sample
+  narr = narr_options.sample
+
+  cur_row = row_options[nrow]
+  cur_col = col_options[ncol]
+  cur_arr = arr_options[narr]
+
+  predict_symbol      = cf_symbol[cur_row][cur_col][cur_arr]
+  predict_description = cf_description[cur_row][cur_col][cur_arr]
+  predict_score       = 0.9 * rand(0.99)
+
+  current_information = [predict_symbol, predict_description, predict_score]
+
+  # Predict counterfactual symbol
+  File.write("data/statistics/symbol/current_label.txt",                 predict_symbol)
+
+  # Predict counterfactual score
+  File.write("data/statistics/probability/current_probability.txt", predict_score)
+
+  # Assign information as counterfactual label
+  File.write("data/statistics/label/current_information.txt",            current_information)
+
+  # Create counterfactual description
+  File.write("data/statistics/description/current_description.txt",      predict_description)
+
+  [predict_symbol, predict_description, predict_score]
+end
+
+def negative_counterfact_selection(*args)
+  a1, a2, b1, b2, c1, c2 = args
+
+  a = a1, a2
+  b = b1, b2
+  c = c1, c2
+
+  counter_factuals = [
+    [[a[0], a[0], a[0]],
+     [a[0], a[0], b[0]],
+     [a[0], a[0], c[0]]],
+
+    [[b[0], b[0], a[0]],
+     [b[0], b[0], b[0]],
+     [b[0], b[0], c[0]]],
+
+    [[c[0], c[0], a[0]],
+     [c[0], c[0], b[0]],
+     [c[0], c[0], c[0]]],
+  ], [
+    [[a[1], a[1], a[1]],
+     [a[1], a[1], b[1]],
+     [a[1], a[1], c[1]]],
+
+    [[b[1], b[1], a[1]],
+     [b[1], b[1], b[1]],
+     [b[1], b[1], c[1]]],
+
+    [[c[1], c[1], a[1]],
+     [c[1], c[1], b[1]],
+     [c[1], c[1], c[1]]],
+  ]
+
+  cf_symbol      = counter_factuals[0]
+  cf_description = counter_factuals[1]
+
+  row_options = [0, 1, 2]
+  col_options = [0, 1, 2]
+  arr_options = [0, 1, 2]
+
+  ## Preselectors
+  nrow_options = [-1, -2, -3]
+  ncol_options = [-1, -2, -3]
+  narr_options = [-1, -2, -3]
+
+  nrow = nrow_options.sample
+  ncol = ncol_options.sample
+  narr = narr_options.sample
+
+  cur_row = row_options[nrow]
+  cur_col = col_options[ncol]
+  cur_arr = arr_options[narr]
+
+  predict_symbol      = cf_symbol[cur_row][cur_col][cur_arr]
+  predict_description = cf_description[cur_row][cur_col][cur_arr]
+  predict_score       = nprobability(0.99)
+
+  current_information = [predict_symbol, predict_description, predict_score]
+
+  # Predict counterfactual symbol
+  File.write("data/statistics/symbol/current_label.txt",                 predict_symbol)
+
+  # Predict counterfactual score
+  File.write("data/statistics/probability/current_probability.txt", predict_score)
+
+  # Assign information as counterfactual label
+  File.write("data/statistics/label/current_information.txt",            current_information)
+
+  # Create counterfactual description
+  File.write("data/statistics/description/current_description.txt",      predict_description)
+
+  [predict_symbol, predict_description, predict_score]
+end
+
+def loss
+  current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+  current_information = File.read("data/statistics/label/current_information.txt")
+
+  if current_probability > 0.999999999999999999
+    current_probability = 0.9 / current_probability
+  end
+  
+  case current_probability
+  when 0.003921569000000000..0.287225000000000000
+    "Im confident it is not [ #{current_information} ] as its only #{current_probability}."
+  when 0.287225000000000001..0.522225000000000000
+    "Im less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+  when 0.522225000000000001..0.756112500000000000
+    "Im almost sure it is [ #{current_information} ] because it has #{current_probability}."
+  when 0.756112500000000001..0.999999999999999999
+    "Im sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+  else
+    "The probability is either to low or to large, so I cant determine exactly."
+  end
+  
+  current_probability    = current_probability * 0.95
+  
+  File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+  File.write("data/statistics/label/current_information.txt",       current_information)
+end
+
+def gain
+  current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+  current_information = File.read("data/statistics/label/current_information.txt")
+
+  if current_probability > 0.999999999999999999
+    current_probability = 0.9 / current_probability
+  end
+  
+  case current_probability
+  when 0.003921569000000000..0.287225000000000000
+    "Im confident it is not [ #{current_information} ] as its only #{current_probability}."
+  when 0.287225000000000001..0.522225000000000000
+    "Im less unconfident it is not [ #{current_information} ] as its only #{current_probability}."
+  when 0.522225000000000001..0.756112500000000000
+    "Im almost sure it is [ #{current_information} ] because it has #{current_probability}."
+  when 0.756112500000000001..0.999999999999999999
+    "Im sure it is [ #{current_information} ] after all it has #{current_probability}."
+
+  else
+    "The probability is either to low or to large, so I cant determine exactly."
+  end
+  
+  current_probability    = current_probability + 0.15
+  
+  File.write("data/statistics/probability/current_probability.txt", "#{current_probability}")
+  File.write("data/statistics/label/current_information.txt",       current_information)
+end
+
+def dynamic_guillotine_allocation
+  l1_reasses = "level one reasses"
+  l2_reasses = "level two reasses"
+  l3_reasses = "level tre reasses"
+  l4_reasses = "level fro reasses"
+
+  reward_model = [
+    [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+    [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+    [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+    [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+  ]
+
+  row_options = [0, 1, 2, 3]
+  col_options = [0, 1, 2, 3]
+  arr_options = [0, 1, 2, 3]
+
+  cur_row = row_options.sample
+  cur_col = col_options.sample
+  cur_arr = arr_options.sample
+
+  current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+  if    current_reward_structure == l1_reasses; loss
+  elsif current_reward_structure == l2_reasses; 2.times do loss end
+  elsif current_reward_structure == l3_reasses; 3.times do loss end
+  elsif current_reward_structure == l4_reasses; 4.times do loss end
+  else
+    loss
+  end
+end
+
+def dynamic_reward_allocation
+  l1_reasses = "level one reasses"
+  l2_reasses = "level two reasses"
+  l3_reasses = "level tre reasses"
+  l4_reasses = "level fro reasses"
+
+  reward_model = [
+    [[l1_reasses, l1_reasses, l1_reasses, l1_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l2_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l3_reasses],
+     [l1_reasses, l1_reasses, l1_reasses, l4_reasses]],
+   
+    [[l2_reasses, l2_reasses, l2_reasses, l1_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l2_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l3_reasses],
+     [l2_reasses, l2_reasses, l2_reasses, l4_reasses]],
+   
+    [[l3_reasses, l3_reasses, l3_reasses, l1_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l2_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l3_reasses],
+     [l3_reasses, l3_reasses, l3_reasses, l4_reasses]],
+   
+    [[l4_reasses, l4_reasses, l4_reasses, l1_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l2_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l3_reasses],
+     [l4_reasses, l4_reasses, l4_reasses, l4_reasses]],
+  ]
+
+  row_options = [0, 1, 2, 3]
+  col_options = [0, 1, 2, 3]
+  arr_options = [0, 1, 2, 3]
+
+  cur_row = row_options.sample
+  cur_col = col_options.sample
+  cur_arr = arr_options.sample
+
+  current_reward_structure = reward_model[cur_row][cur_col][cur_arr]
+
+  if    current_reward_structure == l1_reasses; gain
+  elsif current_reward_structure == l2_reasses; 2.times do gain end
+  elsif current_reward_structure == l3_reasses; 3.times do gain end
+  elsif current_reward_structure == l4_reasses; 4.times do gain end
+  else
+    gain
+  end
+end
+
+def dynamic_mode_switcher
+  modes = [
+    [["deposit", "deposit"], ["deposit", "extract"]],
+    [["extract", "deposit"], ["extract", "extract"]],
+  ]
+  
+  row_options = [0, 1]
+  col_options = [0, 1]
+  arr_options = [0, 1]
+
+  cur_row = row_options.sample
+  cur_col = col_options.sample
+  cur_arr = arr_options.sample
+
+  current_mode = modes[cur_row][cur_col][cur_arr]
+
+  if    current_mode == "deposit"; dynamic_reward_allocation
+  elsif current_mode == "extract"; dynamic_guillotine_allocation
+  else
+    dynamic_guillotine_allocation
+  end
+end
+
+#################################################################################
+#                              Meaning Collissions                              #
+#################################################################################
+# lasokanon - Asokanonu - Lassus used to tie people to canons; more generally   #
+# used to refer to a general law and standard that tethers concepts to          #
+# disproportionate outcomes.                                                    #
+#################################################################################
+def calculate_circumference(radius)
+  if radius.nil?
+    puts "Erreur: Il y n'est un radius."
+  else
+    pi            = 3.14
+    diameter      = 2 * radius
+    circumference = pi * diameter
+
+    [pi, radius, circumference]
+  end
+end
+
+def calculate_depth(circumference, specified_length)
+  if circumference.nil? || specified_length.nil?
+    puts "Erreur: Il y n'est un value specifique."
+  else
+    circumference * specified_length
+  end
+end
+
+def canon_actuelle(cradius, cdepth, catk)
+  if cradius.nil?
+    puts "Erreur: Il y n'est un info de le circumference."
+
+    abort
+  end
+
+  if cdepth.nil?
+    puts "Erreur: Il y n'est un info de le circumference depth."
+
+    abort
+  end
+
+  if catk.nil?
+    puts "Erreur: Il y n'est un info de le cirference atk."
+
+    abort
+  end
+
+  canon_specs = [cradius, cdepth, catk]
+end
+
+def cnarrative(established_canon, counterfactual)
+  if established_canon.nil?
+    puts "Erreur: Il y n'est un info de le narrative official."
+
+    abort
+  end
+
+  if counterfactual.nil?
+    puts "Erreur: Il y n'est un info de le counternarrative."
+
+    abort
+  end
+
+  canon_informatique = [established_canon, counterfactual]
+end
+
+def asoka(*args)
+  canon_circumference, canon_depth, canon_power,
+  established_canon, counterfactual = args
+
+  informaiton = []
+
+  if canon_circumference.nil? || canon_depth.nil? || canon_power.nil?
+    puts "Erreur: Il y n'est un info de le canon."
+
+    abort
+  end
+
+  if established_canon.nil? || counterfactual.nil?
+    puts "Erreur: Il y n'est un info de le canon literaire."
+
+    abort
+  end
+
+  information = information.append(canon_actuelle(canon_circumference, canon_depth, canon_power))
+  information = information.append(cnarrative(established_canon, counterfactual))
+
+  information
+end
+
+#################################################################################
+#                         Japanese Negative Constraints                         #
+#################################################################################
+def encrire(input)
+  if input.nil?
+    puts "Erreur: Il y n'est un mot ou parlance."
+
+    abort
+  end
+
+  print input
+end
+
+def encrireln(input)
+  if input.nil?
+    puts "Erreur: Il y n'est un mot ou parlance."
+
+    abort
+  end
+
+  puts input
+end
+
+def nai(fact_one, fact_two)
+  if fact_one.nil?
+    puts "Erreur: Il y n'est un [fact_one]."
+
+    abort
+  end
+
+  if fact_one.nil?
+    puts "Erreur: Il y n'est un [fact_two]."
+
+    abort
+  end
+
+  encrireln("Nai [ #{fact_one} ] anata [ #{fact_two} ], ")
+
+  [fact_one, fact_two]
+end
+
+def shikasa(fact_three)
+  if fact_one.nil?
+    puts "Erreur: Il y n'est un [fact_three]."
+
+    abort
+  end
+
+  encrireln("shikashi #{fact_three}")
+
+  fact_three
+end
+
+#### Ninhongo Parlez-Vous
+def seibetsu(word_class)
+  if word_class.nil?
+    puts "Erreur: Il y n'est un lexical gender."
+
+    abort
+  end
+
+  "#{word_class}"
+end
+
+def ejento(agent_name)
+  if agent_name.nil?
+    puts "Erreur: Il y n'est un nom de plume."
+
+    abort
+  end
+
+  "#{agent_name}"
+end
+
+def keiyoshi(adjective)
+  if agent_name.nil?
+    puts "Erreur: Il y n'est un adjective."
+
+    abort
+  end
+
+  "#{adjective}"
+end
+
+def shudai(subject)
+  if agent_name.nil?
+    puts "Erreur: Il y n'est un sujet."
+
+    abort
+  end
+
+  "#{subject}"
+end
+
+def doshi(action)
+  if agent_name.nil?
+    puts "Erreur: Il y n'est un verb."
+
+    abort
+  end
+
+  "#{action}"
+end
+
+def fukishi(adverb)
+  if agent_name.nil?
+    puts "Erreur: Il y n'est un verb qualifier."
+
+    abort
+  end
+
+  "#{adverb}"
+end
+
+def nihongo(arg1, arg2, arg3, arg4, arg5, arg6)
+  if arg1.nil? || arg2.nil? || arg3.nil? || arg4.nil? || arg5.nil? || arg6.nil?
+    puts "Il y n'est un arg."
+
+    abort
+  end
+
+  puts "#{arg1} #{arg2} #{arg3} #{arg4} #{arg5} #{arg6}"
+end
+
+#################################################################################
+#                             Japanese Ternary Labels                           #
+#################################################################################
+## Japanese Contrastive
+def sore(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Sora wa #{a} #{b}"
+  
+  sore = [ a, b ]
+  
+  File.open("data/japanese/positive/sore_a.txt", "a") { |f|
+    f.puts sore[0]
+  }
+
+  File.open("data/japanese/positive/sore_b.txt", "a") { |f|
+    f.puts sore[1]
+  }
+end
+
+def shikashi(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Shikashi wa #{a} #{b}"
+  
+  shikashi = [ a, b ]
+
+  #File.open("data/japanese/positive/shikashi_a.txt", "a") { |f|
+  #  f.puts shikashi[0]
+  #}
+
+  #File.open("data/japanese/positive/shikashi_b.txt", "a") { |f|
+  #  f.puts shikashi[1]
+  #}
+end
+
+def matawa(a, b, c, d)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  if c.nil?
+    puts "Erreur: Il y n'est un [C]."
+
+    abort
+  end
+
+  if d.nil?
+    puts "Erreur: Il y n'est un [D]."
+
+    abort
+  end
+
+  "Matawa sora #{a} ni wa #{b} naishi #{c}, shikashi wa #{c}."
+
+  matawa_nest = [ b, c ]
+  matawa_est  = d
+
+  #File.open("data/japanese/positive/matawa_nest_a.txt", "a") { |f|
+  #  f.puts matawa_nest[0]
+  #}
+
+  #File.open("data/japanese/positive/matawa_nest_b.txt", "a") { |f|
+  #  f.puts matawa_nest[1]
+  #}
+  
+  #File.open("data/japanese/positive/matawa_est.txt", "a") { |f|
+  #  f.puts shikashi
+  #}
+end
+
+## Hanten-Ronri
+def nisore(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Sono gyaku sora wa #{a} #{b}"
+  
+  nisore = [ a, b ]
+
+  #File.open("data/japanese/negative/nisore_a.txt", "a") { |f|
+  #  f.puts nisore[0]
+  #}
+
+  #File.open("data/japanese/negative/nisore_b.txt", "a") { |f|
+  #  f.puts nisore[1]
+  #}
+end
+
+def nishikashi(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Sono gyaku shikashi wa #{a} #{b}."
+
+  nishikashi = [ a, b ]
+
+  #File.open("data/japanese/negative/matawa_nest_a.txt", "a") { |f|
+  #  f.puts nishikashi[0]
+  #}
+
+  #File.open("data/japanese/negative/matawa_nest_b.txt", "a") { |f|
+  #  f.puts nishikashi[1]
+  #}
+end
+
+def nimatawa(a, b, c, d)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  if c.nil?
+    puts "Erreur: Il y n'est un [C]."
+
+    abort
+  end
+
+  if d.nil?
+    puts "Erreur: Il y n'est un [D]."
+
+    abort
+  end
+
+  "Sono gyaku matawa sora #{a} wa #{b} naishi #{c}, shikashi wa #{d}"
+
+  nimatawa_nest = [ b, c ]
+  nimatawa_est  = d
+
+  #File.open("data/japanese/negative/nimatawa_nest_a.txt", "a") { |f|
+  #  f.puts nimatawa_nest[0]
+  #}
+
+  #File.open("data/japanese/negative/nimatawa_nest_b.txt", "a") { |f|
+  #  f.puts nimatawa_nest[1]
+  #}
+  
+  #File.open("data/japanese/negative/nimatawa_est.txt", "a") { |f|
+  #  f.puts nimatawa_est
+  #}
+end
+
+#################################################################################
+#                           French Negative Constraints                         #
+#################################################################################
+def ne(first_noun, second_noun)
+  if first_noun.nil?
+    puts "Erreur: Il y n'est un noun de un."
+
+    abort
+  end
+
+  if second_noun.nil?
+    puts "Erreur: Il y n'est un deux."
+
+    abort
+  end
+
+  puts "Non #{first_noun} ou #{second_noun}, "
+
+  [first_noun, second_noun]
+end
+
+def mais(third_noun)
+  if first_noun.nil?
+    puts "Erreur: Il y n'est un noun de trois."
+
+    abort
+  end
+
+  puts "mais cest #{third_noun}."
+
+  third_noun
+end
+
+################################################################################################
+#                                        French Actions                                        #
+################################################################################################
+def mange(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Mange un #{a} en #{b}."
+end
+
+def coupe(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Coupe un #{a} en #{b}."
+end
+
+def cuicre(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Cuicre un #{a} en #{b}."
+end
+
+def baguette(a, b)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Baguette un #{a} en #{b}."
+end
+
+def guillotine(verb, subject)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Guillotine #{verb} #{subject}."
+end
+
+def ax_head(verb, subject)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Tete Du Crescent #{verb} #{subject}."
+end
+
+def roboparle(verb, subject)
+  if a.nil?
+    puts "Erreur: Il y n'est un [A]."
+
+    abort
+  end
+
+  if b.nil?
+    puts "Erreur: Il y n'est un [B]."
+
+    abort
+  end
+
+  "Le robo #{verb} #{subject}."
+end
+
+def parle_a_robo(object, subject, verb, your_name)
+  "#{your_name}: #{subject} #{verb} #{object}"
+end
+
+#################################################################################
+#                               Japanese Ternary Logic                          #
+#################################################################################
+def soflo(assertion, upper_boundary)    
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if upper_boundary.nil?
+    puts "Erreur: Il y n'est un upper boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  sore_kosan = Proc.new { | x, interval |
+    x > interval ? %Q(#{bot_name}: #{x} has crossed the upper boundary.) : %Q(#{bot_name}: #{x} has not crossed the upper boundary.)
+  }
+
+  puts sore_kosan.call(assertion, upper_boundary)
+end
+
+## Shikashi float
+def shiflo(assertion, lower_boundary)
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if lower_boundary.nil?
+    puts "Erreur: Il y n'est un lower boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  shikashi_kosan = Proc.new { | x, interval |
+    x < interval ? %Q(#{bot_name}: #{x} has crossed the limit below the lower boundary.) : %Q(#{bot_name}: #{x} has not crossed the limit below the lower boundary.)
+  }
+
+  puts shikashi_kosan.call(assertion, lower_boundary)
+end
+
+## Matawa float
+def maflo(assertion, upper_boundary, lower_boundary)
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if upper_boundary.nil?
+    puts "Erreur: Il y n'est un upper_boundary."
+
+    abort
+  end
+
+  if lower_boundary.nil?
+    puts "Erreur: Il y n'est un lower boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  matawa_kosan = Proc.new { | x, first_interval, second_interval |
+    x > first_interval && x < second_interval ? %Q(#{bot_name}: #{x} is floating between boundary conditions #{first_interval} and #{second_interval}.) : %Q(#{bot_name}: #{x} is not floating between boundary conditions #{first_interval} and #{second_interval}.)
+  }
+
+  puts matawa_kosan.call(assertion, upper_boundary, lower_boundary)
+end
+
+#################################################################################
+#                                French Ternary Logic                           #
+#################################################################################
+def cint(assertion, upper_boundary)
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if upper_boundary.nil?
+    puts "Erreur: Il y n'est un upper boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  cette_nombre = Proc.new { | x, interval |
+    x > interval ? %Q(#{bot_name}: #{x} has crossed the upper boundary.) : %Q(#{bot_name}: #{x} has not crossed the upper boundary.)
+  }
+
+  puts cette_nombre.call(assertion, upper_boundary)
+end
+
+def mint(assertion, lower_boundary)
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if lower_boundary.nil?
+    puts "Erreur: Il y n'est un lower boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  maisette_nombre = Proc.new { | x, interval |
+    x < interval ? %Q(#{bot_name}: #{x} has crossed the limit below the lower boundary.) : %Q(#{bot_name}: #{x} has not crossed the limit below the lower boundary.)
+  }
+
+  puts maisette_nombre.call(assertion, lower_boundary)
+end
+
+def sint(assertion, lower_boundary, upper_boundary)
+  if assertion.nil?
+    puts "Erreur: Il y n'est un assertion."
+
+    abort
+  end
+
+  if upper_boundary.nil?
+    puts "Erreur: Il y n'est un upper_boundary."
+
+    abort
+  end
+
+  if lower_boundary.nil?
+    puts "Erreur: Il y n'est un lower boundary."
+
+    abort
+  end
+
+  bot_name = %Q(BIANCA)
+
+  sinon_nombre = Proc.new { | x, first_interval, second_interval |
+    x > first_interval && x < second_interval ? %Q(#{bot_name}: #{x} is floating between boundary conditions #{first_interval} and #{second_interval}.) : %Q(#{bot_name}: #{x} is not floating between boundary conditions #{first_interval} and #{second_interval}.)
+  }
+
+  puts sinon_nombre.call(assertion, lower_boundary, upper_boundary)
+end
+
+#################################################################################
+#                              Clothing Categorization                          #
+#################################################################################
+def bow_color(c)
+  c = c.strip
+
+  "Le colour de la archette est #{c}."
+end
+
+def bow_shape(s)
+  s = s.strip
+
+  "Le shape de la archette est #{s}."
+end
+
+def bow_size(w)
+  w = w.strip
+
+  "Le taille de la archette est #{w}."
+end
+
+def hairbows(color, shape, size)
+  if color.nil? or shape.nil? or size.nil?
+    puts "Error: Color, Shape, or Size has not been defined."
+  else
+    new_color = bow_color(color)
+    new_shape = bow_shape(shape)
+    new_size  = bow_size(size)
+
+    print [new_color, new_shape, new_size]
+
+    new_color = new_color.downcase.tr ".", ""
+    new_color = new_color.downcase.tr " ", "_"
+
+    new_shape = new_shape.downcase.tr ".", ""
+    new_shape = new_shape.downcase.tr " ", "_"
+
+    new_size = new_size.downcase.tr ".", ""
+    new_size = new_size.downcase.tr " ", "_"
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+    File.open("scripts/hairbow_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+    }
+  end
+
+  encrireln(" ")
+end
+
+def c_color(s)
+  s = s.strip
+
+  "Le colour de la corsette est #{s}."
+end
+
+def c_shape(s)
+  s = s.strip
+
+  "Le shape de la corsette est #{s}."
+end
+
+def c_size(w)
+  w = w.strip
+
+  "Le taille de la corsette est #{w}."
+end
+
+def corsets(color, shape, size)
+  if color.nil? or shape.nil? or size.nil?
+    puts "Error: Color, Shape, and Size has not been defined."
+  else
+    new_color = c_color(color)
+    new_shape = c_shape(shape)
+    new_size  = c_size(size)
+
+    print [new_color, new_size, new_color]
+
+    new_color = new_color.downcase.tr ".", ""
+    new_color = new_color.downcase.tr " ", "_"
+
+    new_shape = new_shape.downcase.tr ".", ""
+    new_shape = new_shape.downcase.tr " ", "_"
+
+    new_size = new_size.downcase.tr ".", ""
+    new_size = new_size.downcase.tr " ", "_"
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+    File.open("scripts/corset_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+    }
+  end
+
+  encrireln(" ")
+end
+
+def s_color(s)
+  s = s.strip
+
+  "Le colour de le jupe est #{s}."
+end
+
+def s_shape(s)
+  s = s.strip
+
+  "Le shape de le jupe est #{s}."
+end
+
+def s_size(w)
+  w = w.strip
+
+  "Le taille de le jupe est #{w}."
+end
+
+def skirts(color, shape, size)
+  if color.nil? or shape.nil? or size.nil?
+    puts "Error: Color, Shape, and Size has not been defined."
+  else
+    new_color = s_color(color)
+    new_shape = s_shape(shape)
+    new_size  = s_size(size)
+
+    print [new_color, new_size, new_size]
+
+    new_color = new_color.downcase.tr ".", ""
+    new_color = new_color.downcase.tr " ", "_"
+
+    new_shape = new_shape.downcase.tr ".", ""
+    new_shape = new_shape.downcase.tr " ", "_"
+
+    new_size = new_size.downcase.tr ".", ""
+    new_size = new_size.downcase.tr " ", "_"
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+    File.open("scripts/skirt_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+    }
+  end
+
+  encrireln(" ")
+end
+
+def st_color(s)
+  s = s.strip
+
+  "Le colour de le bas est #{s}."
+end
+
+def st_shape(s)
+  s = s.strip
+
+  "Le shape de le bas est #{s}."
+end
+
+def st_size(w)
+  w = w.strip
+
+  "Le taille de le bas est #{w}."
+end
+
+def stockings(color, shape, size)
+  if color.nil? or shape.nil? or size.nil?
+    puts "Error: Color, Shape, and Size has not been defined."
+  else
+    new_color = st_color(color)
+    new_shape = st_shape(shape)
+    new_size  = st_size(size)
+
+    print [new_color, new_size, new_size]
+
+    new_color = new_color.downcase.tr ".", ""
+    new_color = new_color.downcase.tr " ", "_"
+
+    new_shape = new_shape.downcase.tr ".", ""
+    new_shape = new_shape.downcase.tr " ", "_"
+
+    new_size = new_size.downcase.tr ".", ""
+    new_size = new_size.downcase.tr " ", "_"
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+    File.open("scripts/stocking_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+    }
+  end
+
+  encrireln(" ")
+end
+
+def sa_color(s)
+  s = s.strip
+
+  "Le colour de le sabots de bois est #{s}."
+end
+
+def sa_shape(s)
+  s = s.strip
+
+  "Le shape de le sabots de bois  est #{s}."
+end
+
+def sa_size(w)
+  w = w.strip
+
+  "Le taille de le sabots de bois  est #{w}."
+end
+
+def clogs(color, shape, size)
+  if color.nil? or shape.nil? or size.nil?
+    puts "Error: Color, Shape, and Size has not been defined."
+  else
+    new_color = sa_color(color)
+    new_shape = sa_shape(shape)
+    new_size  = sa_size(size)
+
+    print [new_color, new_size, new_size]
+
+    new_color = new_color.downcase.tr ".", ""
+    new_color = new_color.downcase.tr " ", "_"
+
+    new_shape = new_shape.downcase.tr ".", ""
+    new_shape = new_shape.downcase.tr " ", "_"
+
+    new_size = new_size.downcase.tr ".", ""
+    new_size = new_size.downcase.tr " ", "_"
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :size #{new_size}))
+
+    File.open("scripts/clogs_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :size #{new_size})}
+    }
+  end
+
+  encrireln(" ")
+end
+
+#################################################################################
+#                            Deso Yokesavonos Ilepoheto                         #
+#################################################################################
+def soap_color(color)
+  color = color.strip
+
+  "Cette savon est #{color}. "
+end
+
+def soap_scent(scent)
+  scent = scent.strip
+
+  "C'est aussi un parfum de #{scent}. "
+end
+
+def soap_oil(ov)
+  ov = ov.strip
+
+  "Le huile est #{ov}."
+end
+
+def soap_regions(color, scent, oil_variety)
+  if color.nil? or scent.nil? or oil_variety.nil?
+    puts "Error: Color, Shape, or Oil Variety has not been defined."
+  else
+    new_color = soap_color(color)
+    new_scent = soap_scent(scent)
+    new_oil   = soap_oil(oil_variety)
+
+    print [new_color, new_scent, new_oil]
+
+    Obelisk::DataRecycling.obelisk(%Q(cfs :color #{new_color} :shape #{new_shape} :oil_variety #{new_oil}))
+
+    File.open("scripts/soap_trivia.awa", "w") { |f|
+      f.puts %Q{(cfs :color #{new_color} :shape #{new_shape} :oil_variety #{new_oil}}
+    }
+  end
+
+  encrireln(" ")
+end
+
+def chicken_gender(g)
+  g = g.strip
+
+  "Le poulet est un #{g}."
+end
+
+def chicken_size(s)
+  s = s.strip
+
+  "C'est aussi le taille #{s}."
+end
+
+def chicken_weight(w)
+  w = w.strip
+
+  "Et finis, c'est poids est #{w}."
+end
+
+def chicken_breed(gender, size, weight)
+  if gender.nil? or size.nil? or weight.nil?
+    puts "Error: Gender, Shape, or Size has not been defined."
+  else
+    new_gender = chicken_gender(gender)
+    new_size   = chicken_size(size)
+    new_weight = chicken_weight(weight)
+
+    print [new_gender, new_size, new_weight]
+  end
+
+  encrireln(" ")
+end
+
+def gemstone_variety(v)
+  v = v.strip
+
+  "Le variete de gemme est #{v}."
+end
+
+def gemstone_size(s)
+  s = s.strip
+
+  "Le taille de gemme est #{s}."
+end
+
+def gemstone_weight(w)
+  w = w.strip
+
+  "Le poids de gemme est #{w}."
+end
+
+def feed_chicken(variety, size, weight)
+  if variety.nil? or size.nil? or weight.nil?
+    puts "Error: Color, Shape, or Size has not been defined."
+  else
+    new_variety = gemstone_variety(variety)
+    new_size    = gemstone_size(size)
+    new_weight  = gemstone_weight(weight)
+
+    print [new_variety, new_size, new_weight]
+  end
+
+  encrireln(" ")
+end
+
+def roche_variety(v)
+  v = v.strip
+
+  "Le variete de roche est #{v}."
+end
+
+def roche_shape(s)
+  s = s.strip
+
+  "Le shape de roche est #{s}."
+end
+
+def roche_size(s)
+  s = s.strip
+
+  "Le taille de roche est #{s}."
+end
+
+def roche_weight(w)
+  w = w.strip
+
+  "Le poids de roche est #{w}."
+end
+
+def stone_type(variety, shape, size, weight)
+  if variety.nil? or shape.nil? or size.nil? or weight.nil?
+    puts "Error: Variety, Shape, Size, or Weight has not been defined."
+  else
+    new_variety = roche_variety(variety)
+    new_shape   = roche_shape(shape)
+    new_size    = roche_size(size)
+    new_weight  = roche_weight(weight)
+
+    print [new_variety, new_shape, new_size, new_weight]
+  end
+
+  encrireln(" ")
+end
+
+def cat_variety(v)
+  v = v.strip
+
+  "Le variete de le chat est #{v}."
+end
+
+def cat_color(s)
+  s = s.strip
+
+  "Le shape de le chat est #{s}."
+end
+
+def cat_size(s)
+  s = s.strip
+
+  "Le taille de le chat est #{s}."
+end
+
+def cat_weight(w)
+  w = w.strip
+
+  "Le poids de le chat est #{w}."
+end
+
+def cat_variety(species, color, size, weight)
+  if species.nil? or color.nil? or size.nil? or weight.nil?
+    "Error: Species, Color, Size, or Weight has not been defined."
+  else
+    new_variety = cat_variety(variety)
+    new_color   = cat_color(color)
+    new_size    = cat_size(size)
+    new_weight  = cat_weight(weight)
+
+    print [new_variety, new_color, new_size, new_weight]
+  end
+
+  encrireln(" ")
+end
+
+def designate_c_item(selected_item)
+  encrire(selected_item)
+  encrire(" is cursed by the dispenser ")
+end
+
+def designate_p_item(selected_item)
+  encrire(selected_item)
+  encrire(" is vender by ")
+end
+
+def designate_dispenser(selected_dispenser)
+  encrireln(selected_dispenser)
+end
+
+def cursed_status(item, dispenser)
+  if item.nil? or dispenser.nil?
+    "Error: Item or Dispenser has not been defined."
+  else
+    designate_item(item)
+    designate_dispenser(dispenser)
+  end
+end
+
+def purchase_status(item, dispenser)
+  if item.nil? or dispenser.nil?
+    "Error: Item or Dispenser has not been defined."
+  else
+    designate_item(item)
+    designate_dispenser(dispenser)
+  end
+end
+
+def verrefeuille(*args)
+  leaf_color, leaf_size, leaf_weight,
+  glass_color, glass_size, glass_weight = args
+
+  def leaf_features(lc, ls, lw)
+    "# #{y} #{x} #{z}
+(cfs :color #{lc} :size #{ls} :weight #{lw})"
+  end
+
+  def glass_features(wc, ws, ww)
+    "# #{y} #{x} #{z}
+(cfs :color #{wc} :size #{ws} :weight #{ww})"
+  end
+
+  datapoints = [leaf_featres(leaf_color, leaf_size, leaf_weight),
+                glass_features(glass_color, glass_size, glass_weight)]
+
+  puts datapoints
+
+  Obelisk::DataRecycling.obelisk_scripts(datapoints[0])
+  Obelisk::DataRecycling.obelisk_scripts(datapoints[1])
+end
+
+#################################################################################
+#                        Experimental: Seasons Fragments                        #
+#################################################################################
+def sfragment(*args)
+  wood_grain, wood_strength, wood_age,
+  fire_wavelength, fire_height, fire_period,
+  dirt_dryness, gravel_fineness, grass_sparcity,
+  air_wavelength, air_height, air_period = args
+
+  def spring(wg, ws, wa)
+    "(cfs :grain #{wg} :strength #{ws} :age #{wood_age})"
+  end
+
+  def summer(aw, ah, ap)
+    "(cfs :wavelength #{aw} :height #{ah} :period #{ap})"
+  end
+
+  def fall(dd, gf, gs)
+    "(cfs :dryness #{dd} :fineness #{gravel_fineness} :sparcity #{grass_sparcity})"
+  end
+
+  def winter(fw, fh, gp)
+    "(cfs :wavelength #{fw} :height #{fh} :period #{fp})"
+  end
+
+  seasonal_fragments = [spring(wood_grain, wood_strength, wood_age),
+                        summer(fire_wavelength, fire_height, fire_period),
+                        fall(dirt_dryness, gravel_fineness, grass_sparcity),
+                        winter(air_wavelength, air_height, air_period)]
+
+  print seasonal_fragments
+  puts " "
+
+  Obelisk::DataRecycling.obelisk_scripts(seasonal_fragments[0])
+  Obelisk::DataRecycling.obelisk_scripts(seasonal_fragments[1])
+  Obelisk::DataRecycling.obelisk_scripts(seasonal_fragments[2])
+  Obelisk::DataRecycling.obelisk_scripts(seasonal_fragments[3])
+end
+
+#################################################################################
+#                               Coordinate Actions                              #
+#################################################################################
+def cstate(*kwargs, perform_action)
+  player_actions = kwargs
+
+  player_actions[0][perform_action]
+end
+
+def caction(a, b, c)
+  actions = [
+    [[a, a, a],
+     [a, a, b],
+     [a, a, c]],
+
+    [[b, b, a],
+     [b, b, b],
+     [b, b, c]],
+
+    [[c, c, a],
+     [c, c, b],
+     [c, c, c]],
+  ]
+
+  row_options = [0, 1, 2]
+  col_options = [0, 1, 2]
+  arr_options = [0, 1, 2]
+
+  cur_row = row_options.sample
+  cur_col = col_options.sample
+  cur_arr = arr_options.sample
+
+  next_action = actions[cur_row][cur_col][cur_arr]
+
+  current_action  = cstate({
+    a => b,
+    b => c,
+    c => a,
+  }, next_action)
+
+  Obelisk::DataRecycling.obelisk(current_action)
+end
+
+#################################################################################
+#                           Atoll Of Damnation Cemetary                         #
+#################################################################################
+# Atoll De Encaved Cimitiere - "Chemin De Hemetsu", Chemihemetsu. A sinking     #
+# island that had once been larger that is known to sink faster in the center   #
+# of the atoll. Urban legend has it it was used to enterre execution victims    #
+# beheaded by the sword, with war prisoner corpses causing the island to        #
+# gradually sink.                                                               #
+#################################################################################
+def raiteau(*args)
+  wavelength, height, period,
+  pole_height, pole_depth, pole_stability = args
+
+  def wave_data(wl, wh, wp)
+    "The wave lasted for a length of #{period}, at a wave length of #{wavelength} at height of #{height}."
+  end
+
+  def waterlight_data(ph, pd, ps)
+    "The waterlight has a pole hieght of #{pole_height}, a pole dpeth of #{pole_depth}, and a stability of #{pole_stability}."
+  end
+
+  waterlight_info = [wave_data(wavelength, height, period), waterlight_data(pole_height, pole_depth, pole_stability)]
+
+  Obelisk::DataRecycling.obelisk(waterlight_info[0])
+  Obelisk::DataRecycling.obelisk(waterlight_info[1])
+end
+
+def atoll(*args)
+  cemetary_y, cemetary_x, cemetary_d,
+  cavern_y, cavern_x, cavern_d = args
+
+  def cemetary_metrics(y, x)
+    y * x
+  end
+
+  def cavern_metrics(y, x)
+    y * x
+  end
+
+  cemetary_dance = ["Cemetary is #{cemetary_y} by #{cemetary_x} or #{cemetary_metrics(cemetary_y, cemetary_x)} at depth #{cemetary_d}",
+                    "Cavern is #{cavern_y} by #{cavern_x} or #{cemetary_metrics(cavern_y, cavern_x)} at depth #{cavern_d}"]
+
+  Obelisk::DataRecycling.obelisk(cemetary_dance[0])
+  Obelisk::DataRecycling.obelisk(cemetary_dance[1])
+end
+
+def ground_radar(y, x, z, *kwargs)
+  features = kwargs
+
+  size_limit = features.size
+  index = 0
+
+  size_limit.times do
+    selected_feature = features[index]
+
+    puts "#{selected_feature} at #{y} #{x} #{z}"
+
+    Obelisk::DataRecycling.obelisk("#{selected_feature} at #{y} #{x} #{z}")
+
+    index = index + 1
+  end
+
+  Obelisk::DataRecycling.scatter_ashes
+end
+
+def measure_myth(*args)
+  a1, a2, b1, b2, c1, c2, search_space = args
+
+  search_space = search_space.to_i
+
+  search_space.times do
+    counterfact_selection(a1, a2, b1, b2, c1, c2)
+
+    dynamic_mode_wwitcher
+  end
+
+  caction("reality", "partially mythological" "mythological")
+end
+
+def loup_de_foret(wolf_count, *kwargs)
+  anomalous_features = kwargs
+
+  size_limit = anomalous_features.size.to_i
+  index = 0
+
+  size_limit.times do
+    current_anomaly = anomalous_features[index]
+
+    new_iteration = current_anomaly.size
+    new_index = 0
+
+    new_iteration.times do
+      puts "The precise wolf count should be #{wolf_count}. The current anomaly is that shouldn't be in this #{current_location} is #{current_anomaly[new_index]}"
+ 
+      urn_logic = "The precise wolf count should be #{wolf_count}. The current anomaly is that shouldn't be in this #{current_location} is #{current_anomaly[new_index]}"
+
+      Obelisk::DataRecycling.obelisk(urn_logic)
+
+      new_index = new_index + 1
+    end
+
+    index = index + 1
+  end
+
+  Obelisk::DataRecycling.scatter_ashes
+end
+
+def black_sheep(sheep_count, *kwargs)
+  anomalous_features = kwargs
+
+  size_limit = anomalous_features.size.to_i
+  index = 0
+
+  size_limit.times do
+    current_anomaly = anomalous_features[index]
+
+    new_iteration = current_anomaly.size
+    new_index = 0
+
+    new_iteration.times do
+      puts "The precise sheep count should be #{sheep_count}. The current anomaly is that shouldn't be in this #{current_location} is #{current_anomaly[new_index]}"
+ 
+      urn_logic = "The precise sheep count should be #{sheep_count}. The current anomaly is that shouldn't be in this #{current_location} is #{current_anomaly[new_index]}"
+
+      Obelisk::DataRecycling.obelisk(urn_logic)
+
+      new_index = new_index + 1
+    end
+
+    index = index + 1
+  end
+
+  Obelisk::DataRecycling.scatter_ashes
+end
+
+def tree_count(tree_number, *kwargs)
+  anomalous_features = kwargs
+
+  size_limit = anomalous_features.size.to_i
+  index = 0
+
+  size_limit.times do
+    current_anomaly = anomalous_features[index]
+
+    new_iteration = current_anomaly.size
+    new_index = 0
+
+    new_iteration.times do
+      puts "The precise tree count should be #{tree_number}. The current anomaly is that shouldn't be buried here is #{current_anomaly[new_index]}"
+ 
+      urn_logic = "The precise tree count should be #{tree_number}. The current anomaly is that shouldn't be buried here is #{current_anomaly[new_index]}"
+
+      Obelisk::DataRecycling.obelisk(urn_logic)
+
+      new_index = new_index + 1
+    end
+
+    index = index + 1
+  end
+
+  Obelisk::DataRecycling.scatter_ashes
+end
+
+################################################################################################
+#                                Who What When Where Why How                                   #
+################################################################################################
+def self.nom(a)
+  "Mes nom est #{a}."
+end
+
+def self.buttai(b)
+  "C'est un/une #{b}."
+end
+
+def self.temps(c)
+  "Le temp est #{c}."
+end
+
+def fukin(d)
+  "Je suis en le voisinage de #{d}."
+end
+
+def self.motif(e)
+  "Mes raison pour ce est #{e}."
+end
+
+def self.hono(f)
+  "Mois methode pour le fabrication mes objectifs est #{f}."
+end
+
+def self.jiko(a, b, c)
+  "Vous avoir damande moi #{a} a propos #{b} par #{c}."
+end
+
+## Unite specific people at a time and place
+def self.unir(a, b, c)
+  "Je avoir unif avec #{a} avec #{b} a #{c}."
+end
+
+def self.genkei(a)
+  "Je suis un etudiant a propos #{a}."
+end
+
+def self.musee_comprime(a)
+  "cette musee comprime #{a}."
+end
+
+def self.noremodei(a)
+  "Cette #{a} est noermodeios."
+end
+
+def self.ninom(a)
+  "Mes nom est ne #{a}."
+end
+
+def self.nibuttai(b)
+  "C'est non un/une #{b}."
+end
+
+def self.netemps(c)
+  "Le temp est ne #{c}."
+end
+
+def self.nifukin(d)
+  "Je suis ne en le voisinage de #{d}."
+end
+
+def self.nemotif(e)
+  "Mes raison pour ce est ne #{e}."
+end
+
+def self.nihono(f)
+  "Mois methode pour le fabrication mes objectifs est ne #{f}."
+end
+
+## Disunification
+def self.neunir(a, b, c)
+  "Je ne avoir unif avec #{a} avec #{b} a #{c}."
+end
+
+def self.nijiko(a, b, c)
+  "Vous ne avoir damande moi #{a} a propos #{b} par #{c}."
+end
+
+def self.nigenkei(a)
+  "Je suis ne un etudiant a propos #{a}."
+end
+
+#################################################################################
+#                                  From Script                                  #
+#################################################################################
+def from_script
+  file_name = ARGV[0]
+
+  read_file = File.readlines(file_name)
+
+  total_lines = read_file.size.to_i
+  index       = 0
+
+  if total_lines > 0
+    total_lines.times do
+      current_line = read_file[index]
+  
+      current_line = current_line.tr ")", ""  
+      current_line = current_line.tr "(", ""
+      current_line = current_line.tr %q("), %q()
+
+      tokens       = current_line.split(/ /)
+      total_tokens = tokens.size.to_i
+      token_index  = 0
+    
+      ## The actual tokens you'll be parsing.
+      parsed_tokens = [] #of String
+    
+      if total_tokens > 0
+
+        total_tokens.times do
+          current_token = tokens[token_index]
+ 
+          parsed_tokens = parsed_tokens.push(current_token)
+    
+          token_index = token_index + 1
+        end
+        
+        ###################################################################################################
+        #                                         Document Parsing                                        #
+        ###################################################################################################  
+        if    parsed_tokens[0] == "arc"
+          hairbows(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "cor"
+          corsets(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "jup"
+          skirts(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "bas"
+          stockings(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "sab"
+          clogs(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "srg"
+          soap_region(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "pol"
+          chicken_breed(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "pom"
+          feed_chicken(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3])
+        elsif parsed_tokens[0] == "rty"
+          stone_type(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4])
+        elsif parsed_tokens[0] == "cus"
+          puts curse_status(parsed_tokens[1], parsed_tokens[2])
+        elsif parsed_tokens[0] == "ach"
+          puts purchase_status(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4])
+        elsif parsed_tokens[0] == "cin"
+          cint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+        elsif parsed_tokens[0] == "min"
+          mint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+        elsif parsed_tokens[0] == "sin"
+          sint(parsed_tokens[1].to_i, parsed_tokens[2].to_i)
+        elsif parsed_tokens[0] == "ne"
+          ne(parsed_tokens[1], parsed_tokens[2])
+        elsif parsed_tokens[0] == "mais"
+          mais(parsed_tokens[1], parsed_tokens[2])
+        elsif parsed_tokens[0] == "gal"
+
+          # Scaffold Size
+          scaffold_height = parsed_tokens[1].to_i
+          scaffold_width  = parsed_tokens[2].to_i
+          scaffold_depth  = parsed_tokens[3].to_i
+
+          # Rope Metrics
+          rope_length     = parsed_tokens[3].to_i
+          rope_width      = parsed_tokens[4].to_i
+          rope_tensil     = parsed_tokens[5].to_i
+
+          gallows(scaffold_height, scaffold_width, scaffold_depth,
+                  rope_length,     rope_width,     rope_tensil)
+        elsif parsed_tokens[0] == "mmy"
+          puts measure_myth(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7])
+        elsif parsed_tokens[0] == "tco3"
+          tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4]])
+        elsif parsed_tokens[0] == "tco4"
+          tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5]])
+        elsif parsed_tokens[0] == "tco5"
+          tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6]])
+        elsif parsed_tokens[0] == "tco6"
+          tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7]])
+        elsif parsed_tokens[0] == "tco7"
+          tree_count(parsed_tokens[1].to_i, [parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6], parsed_tokens[7], parsed_tokens[8]])
+        elsif parsed_tokens[0] == "cfs"
+          print counterfact_selection(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6])
+          puts " "
+        elsif parsed_tokens[0] == "nfs"
+          print counterfact_selection(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3], parsed_tokens[4], parsed_tokens[5], parsed_tokens[6])
+          puts " "
+        elsif parsed_tokens[0] == "dms"
+          search_limit = parsed_tokens[1].to_i
+
+          search_limit.times do
+            dynamic_mode_switcher
+          end
+
+          current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+          current_information = File.read("data/statistics/label/current_information.txt")
+
+          puts "#{current_probability} #{current_information}"
+        elsif parsed_tokens[0] == "asoka"
+          get_radius           = parsed_tokens[0].to_i
+          circumference_values = calculate_circumference(get_radius)
+
+          canon_power       = parsed_tokens[1].to_i
+          established_canon = parsed_tokens[2]
+          counterfactual    = parsed_tokens[3]
+
+          encrire(asoka(circumference_values[2], calculate_depth(circumference_values[2], 6), canon_power, established_canon, counterfactual))
+          encrireln(" ")
+        elsif parsed_tokens[0] == "cact"
+          encrireln(caction(parsed_tokens[1], parsed_tokens[2], parsed_tokens[3]))
+        elsif parsed_tokens[0] == "vio"
+          system("clear")
+        elsif parsed_tokens[0] == "ext"
+          abort
+        else
+          current_token = tokens[token_index]
+        
+          puts current_token
+        end
+  
+        index = index + 1
+      end
+    end
+  else
+    current_line = read_file[index]
+   
+    puts current_line
+  end
+end
+
+#################################################################################
+#                                     REPL                                      #
+#################################################################################
+# This is for prototyping the scripting language as its developing, while being #
+# phased out for the reading from a script.                                     #
+#################################################################################
+def repl
+  loop do
+    print " >>> "; dispatcher = gets.chomp
+
+    dispatcher = dispatcher.tr "(", ""
+    dispatcher = dispatcher.tr ")", ""
+    dispatcher = dispatcher.tr %Q("), %Q()
+    dispatcher = dispatcher.split(" ")
+
+    if    dispatcher[0] == "arc"
+      hairbows(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "cor"
+      corsets(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "jup"
+      skirts(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "bas"
+      stocking(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "sab"
+      clogs(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "srg"
+      soap_region(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "pol"
+      chicken_breed(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "pom"
+      feed_chicken(dispatcher[1], dispatcher[2], dispatcher[3])
+    elsif dispatcher[0] == "rty"
+      stone_type(dispenser[1], dispatcher[2], dispatcher[3], dispatcher[4])
+    elsif dispatcher[0] == "cus"
+      puts curse_status(dispatcher[1], dispatcher[2])
+    elsif dispatcher[0] == "ach"
+      puts purchase_status(dispatcher[1], dispatcher[2], dispatcher[3], dispatcher[4])
+    elsif dispatcher[0] == "cin"
+      cint(dispatcher[1].to_i, dispatcher[2].to_i)
+    elsif dispatcher[0] == "min"
+      mint(dispatcher[1].to_i, dispatcher[2].to_i)
+    elsif dispatcher[0] == "sin"
+      sint(dispatcher[1].to_i, dispatcher[2].to_i)
+    elsif dispatcher[0] == "ne"
+      ne(dispatcher[1], dispatcher[2])
+    elsif dispatcher[0] == "mais"
+      mais(dispatcher[1], dispatcher[2])
+
+    elsif dispatcher[0] == "tco3"
+      tree_count(dispatcher[1].to_i, [dispatcher[2], dispatcher[3], dispatcher[4]])
+    elsif dispatcher[0] == "tco4"
+      tree_count(dispatcher[1].to_i, [dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5]])
+    elsif dispatcher[0] == "tco5"
+      tree_count(dispatcher[1].to_i, [dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5], dispatcher[6]])
+    elsif dispatcher[0] == "tco6"
+      tree_count(dispatcher[1].to_i, [dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5], dispatcher[6], dispatcher[7]])
+    elsif dispatcher[0] == "tco7"
+      tree_count(dispatcher[1].to_i, [dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5], dispatcher[6], dispatcher[7], dispatcher[8]])
+
+    elsif dispatcher[0] == "cfs"
+      print counterfact_selection(dispatcher[1], dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5], dispatcher[6])
+      puts " "
+    elsif dispatcher[0] == "nfs"
+      print negative_counterfact_selection(dispatcher[1], dispatcher[2], dispatcher[3], dispatcher[4], dispatcher[5], dispatcher[6])
+      puts " "
+    elsif dispatcher[0] == "dms"
+      search_limit = dispatcher[1].to_i
+    
+      search_limit.times do
+        dynamic_mode_switcher
+      end
+
+      current_probability = File.read("data/statistics/probability/current_probability.txt").to_f
+      current_information = File.read("data/statistics/label/current_information.txt")
+
+      puts "#{current_probability} #{current_information}"
+    elsif dispatcher[0] == "asoka"
+      get_radius           = dispatcher[0].to_i
+      circumference_values = calculate_circumference(get_radius)
+
+      canon_power       = dispatcher[1].to_i
+      established_canon = dispatcher[2]
+      counterfactual    = dispatcher[3]
+
+      encrire(asoka(circumference_values[2], calculate_depth(circumference_values[2], 6), canon_power, established_canon, counterfactual))
+      encrireln(" ")
+    elsif dispatcher[0] == "cact"
+      encrireln(caction(dispatcher[1], dispatcher[2], dispatcher[3]))
+    elsif dispatcher[0] == "vio"
+      system("clear")
+    elsif dispatcher[0] == "ext"
+      abort
+    else
+      puts "Error: Non fonction nom."
+    end
+  end
+
+end
+
+def generate_repl
+  awasunu = %{
+#################################################################################
+#                                     REPL                                      #
+#################################################################################
+# This is for prototyping the scripting language as its developing, while being #
+# phased out for the reading from a script.                                     #
+#################################################################################
+def repl
+  system("clear")
+  puts "Welcome to Nuerisupu, compiled on Linux using Crystal."
+
+  loop do
+    print " >>> "; dispatcher = gets.chomp
+
+    dispatcher = dispatcher.tr "(", ""
+    dispatcher = dispatcher.tr ")", ""
+    dispatcher = dispatcher.tr %Q("), %Q()
+    dispatcher = dispatcher.split(" ")
+
+    ## Basic Mechanics
+    if    dispatcher[0] == "enc"
+      encrire(dispatcher[1])
+    elsif dispatcher[0] == "elg"
+      encrireln(dispatcher[1])
+    elsif dispatcher[0] == "nai"
+      encrire(nai(dispatcher[1], dispatcher[2]))
+    elsif dispatcher[0] == "shikashi"
+      encrire(shikashi(dispatcher[1])
+    elsif dispatcher[0] == "ne"
+      encrire(nai(dispatcher[1], dispatcher[2]))
+    elsif dispatcher[0] == "mais"
+      encrireln(nai(dispatcher[1]))
+
+    ## Complex Mechanics
+    elsif dispatcher[0] == "ccf"
+      get_radius           = dispatcher[0].to_i
+      circumference_values = calculate_circumference(get_radius)
+
+      canon_power       = dispatcher[1].to_i
+      established_canon = dispatcher[2]
+      counterfactual    = dispatcher[3]
+
+      encrire(asoka(circumference_values[2], calculate_depth(circumference_values[2], 6), canon_power, established_canon, counterfactual))
+      encrireln(" ")
+
+    ## Clearing screen and exiting the system.
+    elsif dispatcher[0] == "vio"
+      system("clear")
+    elsif dispatcher[0] == "ext"
+      abort
+    else
+      puts "Error: Non fonction nom."
+    end
+  end
+end
+  }
+
+  File.open("nuerisupu.cr", "w") { |f|
+    f.puts awasunu
+  }
+end

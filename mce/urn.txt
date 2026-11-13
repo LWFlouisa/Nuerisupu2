@@ -1,0 +1,88 @@
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is hickory
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is hickory
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is pine
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is cedar
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is pine
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is maple
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is willow
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is willow
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is cedar
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is cedar
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is cactus
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_blue
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is pine
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is maple
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is maple
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is cactus
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is hickory
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldn't be buried here is willow
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_belle :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+cfs :color le_colour_de_la_archette_est_blue :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large
+The precise tree count should be 3. The current anomaly is that shouldnt be buried here is cactus
+cfs :color le_colour_de_la_archette_est_red :shape le_shape_de_la_archette_est_folded :size le_taille_de_la_archette_est_large

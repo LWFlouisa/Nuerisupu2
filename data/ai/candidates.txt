@@ -1,0 +1,3 @@
+(cfs :cats cats_are_the_cleanest_pets :dogs dogs_are_mans_best_friend :gerbils gerbils_dont_user_hamster_wheels)
+(cfs :lure luring_the_enemy :stun temporarily_stunning_the_enemy :trap trapping_the_enemy)
+(cfs :pomme an_apple :banane an_banana :citrone a_lemon)
