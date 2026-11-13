@@ -1,1 +1,0 @@
-puts %Q(Hello Albert)
