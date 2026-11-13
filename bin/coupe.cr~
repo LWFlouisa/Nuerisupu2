@@ -1,0 +1,7 @@
+def coupe(object, subject)
+  o = object
+  s = subject
+
+  print %Q(BIANCA: )
+  %Q(#{object} coupe #{subject})
+end
