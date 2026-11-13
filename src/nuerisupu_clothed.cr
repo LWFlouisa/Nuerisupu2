@@ -15,12 +15,6 @@ class Metadoc
   #define_method self.doc_cfs(file_name, file_output), File.open(file_name, "w") { |f| f.puts file_output }
 end
 
-#def doc_outfit(file_name, file_output)
-#  File.open(file_name, "w") { |f|
-#    f.puts file_output
-#  }
-#end
-
 class Filters
   # wane bhineb [ window pane shines brightly ]
   # bat larts [ black cat farts loudly ]
