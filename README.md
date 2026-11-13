@@ -30,3 +30,10 @@ Docloth allows you to transpile from Clothed Naked Lisp to Naked Naked Lisp expr
 
 ## Docfs
 This is still being worked on and currently in flux.
+
+## Floor Plan Prediction
+This is for floor plan prediction analyses in Roguelike games.
+
+~~~
+(fpp :wood_tile half_slab full_block :stone_tile half_slab full_block :marble_tile half_slab full_block)
+~~~
