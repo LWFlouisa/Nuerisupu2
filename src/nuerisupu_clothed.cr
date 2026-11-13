@@ -372,6 +372,95 @@ class ReinforcementStructures
 end
 
 ###################################################################################################
+#                                  Floor Plan Prediction Algorithm                                #
+###################################################################################################
+# This is a floor plan prediction algorithm that allows you to predict what tile combination are  #
+# likely to happen when all possible tiles are in superposition of each other. Which can also be  #
+# used in tandem with Ocabesce to imagine new tile combination that get predicted by the baysian  #
+# algorithm                                                                                       #
+#                                                                                                 #
+# The future plan is to have probabilities from this used to create more informed followup        #
+# questions and base player stat progression and regressions on the current floor plan of specifc #
+# vault layout.                                                                                   #
+###################################################################################################
+class FloorPlanPredictions
+  def self.floor_plan_prediction(*args)
+    a1, a2, a3, b1, b2, b3, c1, c2, c3 = args
+
+    a = [a1, a2, a3]
+    b = [b1, b2, b3]
+    c = [c1, c2, c3]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    base_one = MatrixTypes.level_three_negative(0.125,  0.3125, 0.999)[cur_row][cur_col][cur_arr][cur_lim]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    base_two = MatrixTypes.level_three_negative( 0.125, 0.3125, 0.999)[cur_row][cur_col][cur_arr][cur_lim]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    base_tre = MatrixTypes.level_three_negative(0.125,  0.3125, 0.999)[cur_row][cur_col][cur_arr][cur_lim]
+
+    matrix = [MatrixTypes.level_three_negative(a[0], b[0], c[0]),
+              MatrixTypes.level_three_negative(a[1], b[1], c[1]),
+              MatrixTypes.level_three_negative(a[2], b[2], c[2])]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    current_y = matrix[0][cur_row][cur_col][cur_arr][cur_lim]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    current_x = matrix[1][cur_row][cur_col][cur_arr][cur_lim]
+
+    cur_row = SelectorTypes.row1(0, 1, 2)
+    cur_col = SelectorTypes.col1(0, 1, 2)
+    cur_arr = SelectorTypes.arr1(0, 1, 2)
+    cur_lim = SelectorTypes.lim1(0, 1)
+
+    current_z = matrix[2][cur_row][cur_col][cur_arr][cur_lim]
+
+    ## Current Information
+    current_information = "[#{current_y}][#{current_x}][#{current_z}]"
+
+    current_probability = base_one * base_two * base_tre
+
+    # Predict counterfactual symbol
+    File.write("data/statistics/symbol/current_label.txt",                 current_symbol)
+
+    # Predict counterfactual score
+    File.write("data/statistics/probability/current_probability.txt", current_probability)
+
+    # Assign information as counterfactual label
+    File.write("data/statistics/label/current_information.txt",            current_information)
+
+    # Create counterfactual description
+    File.write("data/statistics/description/current_description.txt",      current_description)
+
+    puts [current_symbol, current_description, current_probability]
+
+    [current_x, current_y, current_z]
+  end
+end
+
+###################################################################################################
 #                                   Dynamic Enemy Stat Allocation                                 #
 ###################################################################################################
 class MetricsOfAnalyticIncrementDiagnostics
